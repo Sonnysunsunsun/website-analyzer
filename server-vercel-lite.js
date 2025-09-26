@@ -192,18 +192,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/api-docs', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'api-docs.html'));
-});
-
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-});
-
 // Trial analysis endpoint
 app.post('/api/analyze/trial', async (req, res) => {
     try {
