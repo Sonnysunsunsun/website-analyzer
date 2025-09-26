@@ -15,6 +15,7 @@ const rateLimit = require('express-rate-limit');
 const sqlite3 = require('sqlite3').verbose();
 const { v4: uuidv4 } = require('uuid');
 const cron = require('node-cron');
+const AIWebsiteAnalyzer = require('./ai-analyzer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -184,6 +185,7 @@ const checkCredits = async (req, res, next) => {
 class WebsiteAnalyzer {
     constructor() {
         this.browser = null;
+        this.aiAnalyzer = new AIWebsiteAnalyzer(process.env.OPENAI_API_KEY);
     }
 
     async init() {
@@ -234,6 +236,18 @@ class WebsiteAnalyzer {
             const contentData = await this.analyzeContent(page);
             const technicalData = await this.analyzeTechnical(page);
 
+            // Get page HTML for AI analysis
+            let aiAnalysis = null;
+            if (process.env.OPENAI_API_KEY) {
+                try {
+                    const pageHTML = await page.content();
+                    aiAnalysis = await this.aiAnalyzer.analyzeWebsite(url, { html: pageHTML });
+                } catch (error) {
+                    console.error('AI analysis failed:', error);
+                    aiAnalysis = { error: 'AI analysis temporarily unavailable' };
+                }
+            }
+
             await page.close();
 
             const overallScore = this.calculateOverallScore({
@@ -256,6 +270,7 @@ class WebsiteAnalyzer {
                 security: securityData,
                 content: contentData,
                 technical: technicalData,
+                aiAnalysis: aiAnalysis,
                 recommendations: this.generateRecommendations({
                     performance: performanceData,
                     seo: seoData,

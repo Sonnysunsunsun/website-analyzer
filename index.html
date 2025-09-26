@@ -385,6 +385,108 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* AI Analysis Styles */
+        .ai-analysis {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .ai-analysis h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .ai-analysis h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .ai-score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-score-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-score-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-score-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .ai-score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .ai-insights, .ai-quick-wins, .ai-priority-actions {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .ai-content strong {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .ai-quick-win {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+
+        .ai-priority-action {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .priority-number {
+            display: inline-block;
+            min-width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #ffd700;
+            color: #764ba2;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -446,8 +548,29 @@
             <div class="recommendations">
                 <h2>Recommendations</h2>
                 <div id="recommendationsList"></div>
+            </div>
 
-                <div class="export-buttons">
+            <!-- AI Analysis Section -->
+            <div id="aiAnalysisSection" class="ai-analysis" style="display:none;">
+                <h2>🤖 AI-Powered Conversion Analysis</h2>
+                <div class="ai-analysis-container">
+                    <div class="ai-score-grid" id="aiScoreGrid"></div>
+                    <div class="ai-insights">
+                        <h3>💡 Expert Insights</h3>
+                        <div id="aiInsights"></div>
+                    </div>
+                    <div class="ai-quick-wins">
+                        <h3>🚀 Quick Wins (Implement Today)</h3>
+                        <div id="aiQuickWins"></div>
+                    </div>
+                    <div class="ai-priority-actions">
+                        <h3>🎯 Priority Actions</h3>
+                        <div id="aiPriorityActions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="export-buttons">
                     <button class="export-btn" onclick="exportReport('json')">Export JSON</button>
                     <button class="export-btn" onclick="exportReport('html')">Export HTML Report</button>
                 </div>
@@ -516,6 +639,11 @@
 
             // Display recommendations
             displayRecommendations(data.recommendations);
+
+            // Display AI Analysis if available
+            if (data.aiAnalysis && !data.aiAnalysis.error) {
+                displayAIAnalysis(data.aiAnalysis);
+            }
         }
 
         function animateScore(targetScore) {
@@ -617,6 +745,73 @@
                 `;
                 list.appendChild(item);
             });
+        }
+
+        function displayAIAnalysis(aiData) {
+            const section = document.getElementById('aiAnalysisSection');
+            section.style.display = 'block';
+
+            // Display AI scores
+            if (aiData.scores) {
+                const scoreGrid = document.getElementById('aiScoreGrid');
+                scoreGrid.innerHTML = '';
+
+                const scoreTypes = [
+                    { key: 'headline', label: 'Headline Conversion', icon: '📝' },
+                    { key: 'cta', label: 'CTA Effectiveness', icon: '🎯' },
+                    { key: 'trust', label: 'Trust Signals', icon: '🛡️' },
+                    { key: 'copy', label: 'Copy Persuasion', icon: '✍️' },
+                    { key: 'value', label: 'Value Clarity', icon: '💎' },
+                    { key: 'overall', label: 'Overall Potential', icon: '🏆' }
+                ];
+
+                scoreTypes.forEach(type => {
+                    const score = aiData.scores[type.key] || 0;
+                    const card = document.createElement('div');
+                    card.className = 'ai-score-card';
+                    card.innerHTML = `
+                        <div class="ai-score-icon">${type.icon}</div>
+                        <div class="ai-score-label">${type.label}</div>
+                        <div class="ai-score-value" style="color: ${getScoreColor(score)}">${score}/100</div>
+                    `;
+                    scoreGrid.appendChild(card);
+                });
+            }
+
+            // Display main recommendations
+            if (aiData.recommendations) {
+                const insights = document.getElementById('aiInsights');
+                insights.innerHTML = `<div class="ai-content">${formatAIContent(aiData.recommendations)}</div>`;
+            }
+
+            // Display quick wins
+            if (aiData.quickWins && aiData.quickWins.length > 0) {
+                const quickWinsEl = document.getElementById('aiQuickWins');
+                quickWinsEl.innerHTML = aiData.quickWins.map(win =>
+                    `<div class="ai-quick-win">${formatAIContent(win)}</div>`
+                ).join('');
+            }
+
+            // Display priority actions
+            if (aiData.priorityActions && aiData.priorityActions.length > 0) {
+                const priorityEl = document.getElementById('aiPriorityActions');
+                priorityEl.innerHTML = aiData.priorityActions.map((action, index) =>
+                    `<div class="ai-priority-action">
+                        <span class="priority-number">${index + 1}</span>
+                        ${formatAIContent(action)}
+                    </div>`
+                ).join('');
+            }
+        }
+
+        function formatAIContent(content) {
+            // Format AI content with proper line breaks and emphasis
+            return content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>')
+                .replace(/^/, '<p>')
+                .replace(/$/, '</p>');
         }
 
         function getScoreColor(score) {
