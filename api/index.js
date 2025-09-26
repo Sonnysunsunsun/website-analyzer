@@ -1,4 +1,5 @@
 // This file handles the Vercel serverless deployment
-const app = require('../server-vercel.js');
+// Using lightweight version without Puppeteer for Vercel
+const app = require('../server-vercel-lite.js');
 
 module.exports = app;
