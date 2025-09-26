@@ -1012,3 +1012,6 @@ process.on('SIGINT', async () => {
     db.close();
     process.exit(0);
 });
+
+// Export for Vercel
+module.exports = app;
