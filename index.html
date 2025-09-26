@@ -121,6 +121,8 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            z-index: 10;
+            min-width: 150px;
         }
 
         .analyze-btn:hover {
@@ -487,6 +489,79 @@
             margin-right: 1rem;
             flex-shrink: 0;
         }
+
+        /* Scanning Demo Animations */
+        .scan-demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scan-demo {
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .scan-demo svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @keyframes scanLine {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(140px);
+            }
+        }
+
+        .scan-line {
+            animation: scanLine 3s ease-in-out infinite;
+        }
+
+        @keyframes scanHighlight {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+                filter: brightness(1.2);
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        .scan-element {
+            animation: scanHighlight 2s ease-in-out infinite;
+        }
+
+        @keyframes checkAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .check-mark {
+            opacity: 0;
+            animation: checkAppear 0.5s ease-out forwards;
+            animation-iteration-count: infinite;
+            animation-duration: 3s;
+        }
+
+        @media (max-width: 768px) {
+            .scan-demo svg {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -508,10 +583,58 @@
 
             <div class="input-group">
                 <input type="text" class="url-input" placeholder="Enter website URL (e.g., example.com)" id="urlInput">
-                <button class="analyze-btn" onclick="analyzeWebsite()">Analyze</button>
+                <button class="analyze-btn" onclick="analyzeWebsite()">Try Free Analysis</button>
             </div>
 
             <div class="error-message" id="errorMessage"></div>
+
+            <!-- Visual Demo Animation -->
+            <div class="scan-demo-container" style="margin-top: 3rem;">
+                <div class="scan-demo">
+                    <svg width="400" height="250" viewBox="0 0 400 250">
+                        <!-- Browser Window -->
+                        <rect x="50" y="30" width="300" height="180" rx="10" fill="#ffffff" stroke="#e5e7eb" stroke-width="2"/>
+                        <rect x="50" y="30" width="300" height="35" rx="10" fill="#f3f4f6"/>
+                        <circle cx="70" cy="48" r="5" fill="#ef4444"/>
+                        <circle cx="85" cy="48" r="5" fill="#f59e0b"/>
+                        <circle cx="100" cy="48" r="5" fill="#10b981"/>
+
+                        <!-- URL Bar -->
+                        <rect x="120" y="40" width="200" height="15" rx="5" fill="white"/>
+                        <text x="125" y="51" font-family="Arial" font-size="11" fill="#6b7280">yourwebsite.com</text>
+
+                        <!-- Page Content Elements -->
+                        <rect x="70" y="85" width="260" height="25" rx="5" fill="#e0e7ff" class="scan-element"/>
+                        <rect x="70" y="120" width="120" height="20" rx="5" fill="#ddd6fe" class="scan-element" style="animation-delay: 0.3s"/>
+                        <rect x="200" y="120" width="120" height="20" rx="5" fill="#ddd6fe" class="scan-element" style="animation-delay: 0.5s"/>
+                        <rect x="70" y="150" width="180" height="20" rx="5" fill="#c7d2fe" class="scan-element" style="animation-delay: 0.7s"/>
+                        <rect x="260" y="150" width="60" height="35" rx="8" fill="#818cf8" class="scan-element" style="animation-delay: 0.9s"/>
+
+                        <!-- Scanning Laser Effect -->
+                        <line x1="50" y1="70" x2="350" y2="70" stroke="url(#scanGradient)" stroke-width="3" opacity="0.8" class="scan-line"/>
+
+                        <!-- Gradient for laser -->
+                        <defs>
+                            <linearGradient id="scanGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="transparent"/>
+                                <stop offset="50%" stop-color="#10b981"/>
+                                <stop offset="100%" stop-color="transparent"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Analysis Icons -->
+                        <g class="analysis-icons">
+                            <text x="200" y="20" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark">✓ SEO</text>
+                            <text x="120" y="20" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark" style="animation-delay: 0.5s">✓ Speed</text>
+                            <text x="280" y="20" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark" style="animation-delay: 1s">✓ Security</text>
+                            <text x="200" y="230" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark" style="animation-delay: 1.5s">✓ Mobile</text>
+                        </g>
+                    </svg>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #6b7280; font-size: 0.95rem;">
+                    AI analyzes your website for conversions, SEO, performance & more
+                </p>
+            </div>
         </div>
     </section>
 
@@ -600,7 +723,7 @@
             document.querySelector('.analyze-btn').textContent = 'Analyzing...';
 
             try {
-                const response = await fetch('/api/analyze', {
+                const response = await fetch('/api/analyze/trial', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
