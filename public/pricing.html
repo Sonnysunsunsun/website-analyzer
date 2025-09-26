@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - SiteAnalyzer Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5B21B6;
+            --primary-dark: #4C1D95;
+            --secondary: #EC4899;
+            --dark: #111827;
+            --gray: #6B7280;
+            --light-gray: #F3F4F6;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            background: var(--light-gray);
+        }
+
+        .nav {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pricing-header h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .pricing-header p {
+            font-size: 20px;
+            color: var(--gray);
+        }
+
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .billing-option {
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .billing-option.active {
+            color: var(--primary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background: var(--light-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            left: 32px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 32px;
+            position: relative;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: white;
+            padding: 4px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .plan-description {
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .price-container {
+            margin-bottom: 32px;
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: 900;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .price-currency {
+            font-size: 24px;
+            margin-right: 4px;
+        }
+
+        .price-period {
+            font-size: 18px;
+            color: var(--gray);
+            margin-left: 8px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 18px;
+            margin-top: 4px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            color: var(--success);
+            font-size: 18px;
+        }
+
+        .feature-icon.disabled {
+            color: var(--gray);
+            opacity: 0.4;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-section {
+            background: white;
+            border-radius: 16px;
+            padding: 60px 32px;
+            margin-bottom: 60px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 16px;
+            background: var(--light-gray);
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            margin-top: 16px;
+            color: var(--gray);
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 24px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="logo">SiteAnalyzer Pro</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/login" class="nav-link">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="pricing-header">
+            <h1>Choose Your Plan</h1>
+            <p>Start free, upgrade when you need more power</p>
+        </div>
+
+        <div class="billing-toggle">
+            <span class="billing-option active">Monthly</span>
+            <div class="toggle-switch" onclick="toggleBilling()">
+                <div class="toggle-slider"></div>
+            </div>
+            <span class="billing-option">Annual (Save 20%)</span>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 class="plan-name">Free</h3>
+                <p class="plan-description">Perfect for getting started</p>
+                <div class="price-container">
+                    <div class="price">
+                        <span class="price-currency">$</span>
+                        <span class="price-amount" data-monthly="0" data-annual="0">0</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="feature-icon">✓</span> 3 analyses per month</li>
+                    <li><span class="feature-icon">✓</span> Basic reports</li>
+                    <li><span class="feature-icon">✓</span> Email support</li>
+                    <li><span class="feature-icon disabled">✗</span> API access</li>
+                    <li><span class="feature-icon disabled">✗</span> Export to PDF</li>
+                    <li><span class="feature-icon disabled">✗</span> Priority support</li>
+                </ul>
+                <a href="/signup" class="btn btn-outline">Start Free</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <span class="pricing-badge">Most Popular</span>
+                <h3 class="plan-name">Professional</h3>
+                <p class="plan-description">For growing businesses</p>
+                <div class="price-container">
+                    <div class="price">
+                        <span class="price-currency">$</span>
+                        <span class="price-amount" data-monthly="29" data-annual="23">29</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <div class="original-price" style="display: none;">$29/month</div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="feature-icon">✓</span> 50 analyses per month</li>
+                    <li><span class="feature-icon">✓</span> Advanced reports</li>
+                    <li><span class="feature-icon">✓</span> API access</li>
+                    <li><span class="feature-icon">✓</span> Export to PDF</li>
+                    <li><span class="feature-icon">✓</span> Priority support</li>
+                    <li><span class="feature-icon">✓</span> Custom branding</li>
+                </ul>
+                <a href="/signup?plan=professional" class="btn btn-primary">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3 class="plan-name">Enterprise</h3>
+                <p class="plan-description">For teams & agencies</p>
+                <div class="price-container">
+                    <div class="price">
+                        <span class="price-currency">$</span>
+                        <span class="price-amount" data-monthly="99" data-annual="79">99</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <div class="original-price" style="display: none;">$99/month</div>
+                </div>
+                <ul class="features-list">
+                    <li><span class="feature-icon">✓</span> Unlimited analyses</li>
+                    <li><span class="feature-icon">✓</span> White-label reports</li>
+                    <li><span class="feature-icon">✓</span> Advanced API</li>
+                    <li><span class="feature-icon">✓</span> Team collaboration</li>
+                    <li><span class="feature-icon">✓</span> Dedicated support</li>
+                    <li><span class="feature-icon">✓</span> Custom integrations</li>
+                </ul>
+                <a href="/contact" class="btn btn-outline">Contact Sales</a>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2 style="text-align: center; margin-bottom: 16px;">Detailed Feature Comparison</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Free</th>
+                        <th>Professional</th>
+                        <th>Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Monthly Analyses</strong></td>
+                        <td>3</td>
+                        <td>50</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td><strong>API Access</strong></td>
+                        <td>—</td>
+                        <td>✓</td>
+                        <td>✓ Advanced</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Export Options</strong></td>
+                        <td>JSON</td>
+                        <td>JSON, HTML, PDF</td>
+                        <td>All formats</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support</strong></td>
+                        <td>Email</td>
+                        <td>Priority Email</td>
+                        <td>Dedicated Manager</td>
+                    </tr>
+                    <tr>
+                        <td><strong>White Label</strong></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Retention</strong></td>
+                        <td>30 days</td>
+                        <td>1 year</td>
+                        <td>Unlimited</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="faq-section">
+            <h2 style="text-align: center; margin-bottom: 32px;">Frequently Asked Questions</h2>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Can I change my plan anytime?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! You can upgrade or downgrade your plan at any time. When upgrading, you'll be charged the prorated amount for the remainder of your billing cycle. When downgrading, the credit will be applied to your next invoice.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Do you offer refunds?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    We offer a 14-day money-back guarantee for all paid plans. If you're not satisfied with our service, contact our support team within 14 days of your purchase for a full refund.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>What happens if I exceed my monthly limit?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    If you reach your monthly analysis limit, you can either wait for the next billing cycle or upgrade to a higher plan. We'll notify you when you're approaching your limit so you're never caught off guard.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Is there an API rate limit?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, API requests are rate-limited based on your plan. Professional plans get 100 requests per minute, while Enterprise plans get 500 requests per minute. Custom limits are available upon request.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 SiteAnalyzer Pro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let isAnnual = false;
+
+        function toggleBilling() {
+            isAnnual = !isAnnual;
+            const toggle = document.querySelector('.toggle-switch');
+            const billingOptions = document.querySelectorAll('.billing-option');
+            const priceElements = document.querySelectorAll('.price-amount');
+            const originalPrices = document.querySelectorAll('.original-price');
+
+            toggle.classList.toggle('active');
+            billingOptions[0].classList.toggle('active');
+            billingOptions[1].classList.toggle('active');
+
+            priceElements.forEach(element => {
+                const monthly = element.getAttribute('data-monthly');
+                const annual = element.getAttribute('data-annual');
+                element.textContent = isAnnual ? annual : monthly;
+            });
+
+            originalPrices.forEach(element => {
+                element.style.display = isAnnual ? 'block' : 'none';
+            });
+        }
+
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+            const icon = element.querySelector('.faq-question span:last-child');
+            icon.textContent = element.classList.contains('active') ? '−' : '+';
+        }
+    </script>
+</body>
+</html>

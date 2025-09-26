@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - SiteAnalyzer Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5B21B6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --dark: #111827;
+            --gray: #6B7280;
+            --light-gray: #F3F4F6;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light-gray);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .nav {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .score-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .url-display {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .score-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 64px;
+            font-weight: 800;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .category-score {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .score-high { color: var(--success); }
+        .score-medium { color: var(--warning); }
+        .score-low { color: var(--error); }
+
+        .category-details {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .recommendations {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .recommendations h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+
+        .rec-item {
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--primary);
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+
+        .rec-item.critical {
+            border-left-color: var(--error);
+        }
+
+        .rec-item.high {
+            border-left-color: var(--warning);
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .badge-critical {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .badge-high {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-medium {
+            background: rgba(91, 33, 182, 0.1);
+            color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .limited-banner {
+            background: linear-gradient(135deg, #f59e0b, #ec4899);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="logo">SiteAnalyzer Pro</a>
+            <div style="display: flex; gap: 16px;">
+                <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+                <a href="/signup" class="btn btn-primary" id="signupBtn">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="limitedBanner" class="limited-banner" style="display: none;">
+            <h3>Limited Trial Results</h3>
+            <p>Sign up for a free account to see full recommendations and unlock all features!</p>
+        </div>
+
+        <div class="score-hero">
+            <div class="url-display" id="urlDisplay">Loading...</div>
+
+            <div class="score-circle">
+                <svg width="200" height="200">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+                    <circle id="scoreCircle" cx="100" cy="100" r="90" fill="none" stroke="url(#gradient)" stroke-width="10"
+                            stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="565"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#667eea"/>
+                            <stop offset="100%" stop-color="#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="score-number" id="scoreNumber">0</div>
+            </div>
+
+            <h1 style="margin-bottom: 16px;">Website Analysis Complete</h1>
+            <p style="color: var(--gray);" id="timestamp">Analyzed just now</p>
+
+            <div class="metrics-grid" id="quickMetrics"></div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="exportReport('json')">Export JSON</button>
+                <button class="btn btn-outline" onclick="exportReport('html')">Export HTML</button>
+                <button class="btn btn-outline" onclick="newAnalysis()">Analyze Another</button>
+            </div>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid"></div>
+
+        <div class="recommendations" id="recommendationsSection">
+            <h2>Recommendations</h2>
+            <div id="recommendationsList"></div>
+        </div>
+    </div>
+
+    <script>
+        let analysisData = null;
+
+        // Load data from sessionStorage or URL params
+        window.addEventListener('load', () => {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            if (token) {
+                document.getElementById('signupBtn').textContent = 'Dashboard';
+                document.getElementById('signupBtn').href = '/dashboard';
+            }
+
+            // Try to get data from sessionStorage first (from trial)
+            const sessionData = sessionStorage.getItem('analysisResults');
+            if (sessionData) {
+                analysisData = JSON.parse(sessionData);
+                sessionStorage.removeItem('analysisResults');
+                displayResults(analysisData);
+            } else {
+                // Try to get from URL params (from dashboard)
+                const urlParams = new URLSearchParams(window.location.search);
+                const dataParam = urlParams.get('data');
+                if (dataParam) {
+                    analysisData = JSON.parse(decodeURIComponent(dataParam));
+                    displayResults(analysisData);
+                } else {
+                    // No data found
+                    window.location.href = '/';
+                }
+            }
+        });
+
+        function displayResults(data) {
+            // Display URL
+            document.getElementById('urlDisplay').textContent = data.url;
+
+            // Display timestamp
+            const date = new Date(data.timestamp);
+            document.getElementById('timestamp').textContent = `Analyzed ${date.toLocaleString()}`;
+
+            // Show limited banner if trial
+            if (data.limitedTrial) {
+                document.getElementById('limitedBanner').style.display = 'block';
+            }
+
+            // Animate score
+            animateScore(data.overallScore);
+
+            // Display quick metrics
+            const quickMetrics = [
+                { label: 'Load Time', value: `${(data.performance.loadTime / 1000).toFixed(1)}s` },
+                { label: 'SEO Score', value: data.seo.score },
+                { label: 'Mobile Score', value: data.mobile.score },
+                { label: 'Security', value: data.security.isHTTPS ? '✓ HTTPS' : '✗ HTTP' }
+            ];
+
+            const metricsHtml = quickMetrics.map(metric => `
+                <div class="metric-item">
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-label">${metric.label}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('quickMetrics').innerHTML = metricsHtml;
+
+            // Display categories
+            displayCategories(data);
+
+            // Display recommendations
+            displayRecommendations(data.recommendations);
+        }
+
+        function animateScore(targetScore) {
+            const scoreElement = document.getElementById('scoreNumber');
+            const circle = document.getElementById('scoreCircle');
+            const circumference = 2 * Math.PI * 90;
+
+            let currentScore = 0;
+            const increment = targetScore / 50;
+
+            const interval = setInterval(() => {
+                currentScore += increment;
+                if (currentScore >= targetScore) {
+                    currentScore = targetScore;
+                    clearInterval(interval);
+                }
+
+                scoreElement.textContent = Math.round(currentScore);
+                const offset = circumference - (currentScore / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+
+                // Change color based on score
+                if (currentScore >= 80) {
+                    circle.style.stroke = '#10b981';
+                    scoreElement.style.color = '#10b981';
+                } else if (currentScore >= 60) {
+                    circle.style.stroke = '#f59e0b';
+                    scoreElement.style.color = '#f59e0b';
+                } else {
+                    circle.style.stroke = '#ef4444';
+                    scoreElement.style.color = '#ef4444';
+                }
+            }, 20);
+        }
+
+        function displayCategories(data) {
+            const categories = [
+                {
+                    title: 'SEO',
+                    score: data.seo.score,
+                    details: [
+                        { label: 'Title Length', value: `${data.seo.title.length} chars` },
+                        { label: 'Meta Description', value: `${data.seo.metaDescription.length} chars` },
+                        { label: 'H1 Tags', value: data.seo.headings.h1Count },
+                        { label: 'Images with Alt', value: `${data.seo.images.altCoverage}%` }
+                    ]
+                },
+                {
+                    title: 'Performance',
+                    score: Math.max(0, 100 - (data.performance.loadTime / 100)),
+                    details: [
+                        { label: 'Load Time', value: `${(data.performance.loadTime / 1000).toFixed(2)}s` },
+                        { label: 'DOM Loaded', value: `${(data.performance.domContentLoaded / 1000).toFixed(2)}s` }
+                    ]
+                },
+                {
+                    title: 'Mobile',
+                    score: data.mobile.score,
+                    details: [
+                        { label: 'Viewport', value: data.mobile.hasViewport ? '✓ Yes' : '✗ No' },
+                        { label: 'Touch Targets', value: `${data.mobile.touchTargets.adequatePercentage}% OK` },
+                        { label: 'Text Size', value: `${data.mobile.averageTextSize.toFixed(1)}px` }
+                    ]
+                },
+                {
+                    title: 'Security',
+                    score: data.security.score,
+                    details: [
+                        { label: 'HTTPS', value: data.security.isHTTPS ? '✓ Enabled' : '✗ Disabled' },
+                        { label: 'Security Headers', value: `${data.security.secureHeadersCount}/5` }
+                    ]
+                },
+                {
+                    title: 'Content',
+                    score: data.content.score,
+                    details: [
+                        { label: 'Word Count', value: data.content.wordCount },
+                        { label: 'CTAs', value: data.content.ctaButtons },
+                        { label: 'Social Links', value: data.content.socialLinks }
+                    ]
+                },
+                {
+                    title: 'Technical',
+                    score: data.technical.score,
+                    details: [
+                        { label: 'Sitemap', value: data.technical.hasSitemap ? '✓ Found' : '✗ Missing' },
+                        { label: 'Page Size', value: `${data.technical.pageSize.mb} MB` },
+                        { label: 'Broken Links', value: data.technical.brokenLinks }
+                    ]
+                }
+            ];
+
+            const html = categories.map(cat => {
+                const scoreClass = cat.score >= 80 ? 'score-high' : cat.score >= 60 ? 'score-medium' : 'score-low';
+                return `
+                    <div class="category-card">
+                        <div class="category-header">
+                            <h3 class="category-title">${cat.title}</h3>
+                            <div class="category-score ${scoreClass}">${cat.score}/100</div>
+                        </div>
+                        <div class="category-details">
+                            ${cat.details.map(detail => `
+                                <div class="category-item">
+                                    <span>${detail.label}</span>
+                                    <strong>${detail.value}</strong>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('categoriesGrid').innerHTML = html;
+        }
+
+        function displayRecommendations(recommendations) {
+            const html = recommendations.map(rec => {
+                const priorityClass = rec.priority.toLowerCase();
+                return `
+                    <div class="rec-item ${priorityClass}">
+                        <span class="priority-badge badge-${priorityClass}">${rec.priority}</span>
+                        <h3 style="margin: 8px 0;">${rec.issue}</h3>
+                        <p style="color: var(--gray); margin-bottom: 8px;">${rec.recommendation}</p>
+                        <div style="display: flex; gap: 16px; font-size: 14px; color: var(--gray);">
+                            <span><strong>Impact:</strong> ${rec.impact}</span>
+                            <span><strong>Effort:</strong> ${rec.effort}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('recommendationsList').innerHTML = html;
+        }
+
+        function exportReport(format) {
+            if (!analysisData) return;
+
+            const dataStr = JSON.stringify(analysisData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+            const link = document.createElement('a');
+            link.setAttribute('href', dataUri);
+            link.setAttribute('download', `website-analysis-${Date.now()}.${format}`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function newAnalysis() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = '/dashboard';
+            } else {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>
