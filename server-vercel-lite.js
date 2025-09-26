@@ -204,6 +204,10 @@ app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
+app.get('/results', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'results.html'));
+});
+
 // Trial analysis endpoint
 app.post('/api/analyze/trial', async (req, res) => {
     try {

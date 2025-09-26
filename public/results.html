@@ -385,10 +385,10 @@
 
             // Display quick metrics
             const quickMetrics = [
-                { label: 'Load Time', value: `${(data.performance.loadTime / 1000).toFixed(1)}s` },
-                { label: 'SEO Score', value: data.seo.score },
-                { label: 'Mobile Score', value: data.mobile.score },
-                { label: 'Security', value: data.security.isHTTPS ? '✓ HTTPS' : '✗ HTTP' }
+                { label: 'Load Time', value: data.performance && data.performance.loadTime ? `${(data.performance.loadTime / 1000).toFixed(1)}s` : 'N/A' },
+                { label: 'SEO Score', value: data.seo ? data.seo.score : 0 },
+                { label: 'Mobile Score', value: data.mobile ? data.mobile.score : 0 },
+                { label: 'Security', value: data.security && data.security.isHTTPS ? '✓ HTTPS' : '✗ HTTP' }
             ];
 
             const metricsHtml = quickMetrics.map(metric => `
@@ -446,10 +446,10 @@
                     title: 'SEO',
                     score: data.seo.score,
                     details: [
-                        { label: 'Title Length', value: `${data.seo.title.length} chars` },
-                        { label: 'Meta Description', value: `${data.seo.metaDescription.length} chars` },
-                        { label: 'H1 Tags', value: data.seo.headings.h1Count },
-                        { label: 'Images with Alt', value: `${data.seo.images.altCoverage}%` }
+                        { label: 'Title Length', value: data.seo && data.seo.title ? `${data.seo.title.length} chars` : 'N/A' },
+                        { label: 'Meta Description', value: data.seo && data.seo.metaDescription ? `${data.seo.metaDescription.length} chars` : 'N/A' },
+                        { label: 'H1 Tags', value: data.seo && data.seo.headings ? data.seo.headings.h1Count : 0 },
+                        { label: 'Images with Alt', value: data.seo && data.seo.images ? `${data.seo.images.altCoverage}%` : 'N/A' }
                     ]
                 },
                 {
@@ -464,35 +464,35 @@
                     title: 'Mobile',
                     score: data.mobile.score,
                     details: [
-                        { label: 'Viewport', value: data.mobile.hasViewport ? '✓ Yes' : '✗ No' },
-                        { label: 'Touch Targets', value: `${data.mobile.touchTargets.adequatePercentage}% OK` },
-                        { label: 'Text Size', value: `${data.mobile.averageTextSize.toFixed(1)}px` }
+                        { label: 'Viewport', value: data.mobile && data.mobile.hasViewport ? '✓ Yes' : '✗ No' },
+                        { label: 'Responsive', value: data.mobile && data.mobile.responsive ? '✓ Yes' : '✗ No' },
+                        { label: 'Mobile Ready', value: data.mobile && data.mobile.score >= 70 ? '✓ Yes' : '⚠ Needs Work' }
                     ]
                 },
                 {
                     title: 'Security',
                     score: data.security.score,
                     details: [
-                        { label: 'HTTPS', value: data.security.isHTTPS ? '✓ Enabled' : '✗ Disabled' },
-                        { label: 'Security Headers', value: `${data.security.secureHeadersCount}/5` }
+                        { label: 'HTTPS', value: data.security && data.security.isHTTPS ? '✓ Enabled' : '✗ Disabled' },
+                        { label: 'Secure', value: data.security && data.security.score >= 70 ? '✓ Yes' : '⚠ Needs Review' }
                     ]
                 },
                 {
                     title: 'Content',
                     score: data.content.score,
                     details: [
-                        { label: 'Word Count', value: data.content.wordCount },
-                        { label: 'CTAs', value: data.content.ctaButtons },
-                        { label: 'Social Links', value: data.content.socialLinks }
+                        { label: 'Word Count', value: data.content && data.content.wordCount ? data.content.wordCount : 0 },
+                        { label: 'CTAs', value: data.content && data.content.ctaButtons ? data.content.ctaButtons : 0 },
+                        { label: 'Contact Info', value: data.content && data.content.hasContactInfo && (data.content.hasContactInfo.email || data.content.hasContactInfo.phone) ? '✓ Found' : '✗ Missing' }
                     ]
                 },
                 {
                     title: 'Technical',
                     score: data.technical.score,
                     details: [
-                        { label: 'Sitemap', value: data.technical.hasSitemap ? '✓ Found' : '✗ Missing' },
-                        { label: 'Page Size', value: `${data.technical.pageSize.mb} MB` },
-                        { label: 'Broken Links', value: data.technical.brokenLinks }
+                        { label: 'Forms', value: data.technical && data.technical.forms ? data.technical.forms : 0 },
+                        { label: 'Technical Score', value: data.technical && data.technical.score ? data.technical.score : 0 },
+                        { label: 'Status', value: '✓ Analyzed' }
                     ]
                 }
             ];
@@ -521,6 +521,10 @@
         }
 
         function displayRecommendations(recommendations) {
+            if (!recommendations || recommendations.length === 0) {
+                document.getElementById('recommendationsList').innerHTML = '<p>No recommendations available.</p>';
+                return;
+            }
             const html = recommendations.map(rec => {
                 const priorityClass = rec.priority.toLowerCase();
                 return `
