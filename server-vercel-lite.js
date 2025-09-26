@@ -192,6 +192,18 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
 // Trial analysis endpoint
 app.post('/api/analyze/trial', async (req, res) => {
     try {
@@ -212,6 +224,105 @@ app.post('/api/analyze/trial', async (req, res) => {
         res.status(500).json({
             success: false,
             error: 'Failed to analyze website. Please check the URL and try again.'
+        });
+    }
+});
+
+// Authentication endpoints
+app.post('/api/auth/signup', async (req, res) => {
+    try {
+        const { name, email, password, terms } = req.body;
+
+        // Basic validation
+        if (!name || !email || !password || !terms) {
+            return res.status(400).json({
+                success: false,
+                error: 'All fields are required'
+            });
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid email format'
+            });
+        }
+
+        // Password validation
+        if (password.length < 8) {
+            return res.status(400).json({
+                success: false,
+                error: 'Password must be at least 8 characters'
+            });
+        }
+
+        // For demo purposes, just return success
+        // In production, you would:
+        // 1. Hash the password
+        // 2. Store user in database
+        // 3. Generate JWT token
+
+        res.json({
+            success: true,
+            message: 'Account created successfully',
+            token: 'demo-token-' + Date.now(),
+            redirect: '/dashboard'
+        });
+
+    } catch (error) {
+        console.error('Signup error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to create account'
+        });
+    }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password, remember } = req.body;
+
+        // Basic validation
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                error: 'Email and password are required'
+            });
+        }
+
+        // Check for demo account
+        if (email === 'demo@siteanalyzer.pro' && password === 'demo1234') {
+            return res.json({
+                success: true,
+                message: 'Login successful',
+                token: 'demo-token-' + Date.now(),
+                user: {
+                    name: 'Demo User',
+                    email: 'demo@siteanalyzer.pro',
+                    plan: 'free'
+                },
+                redirect: '/dashboard'
+            });
+        }
+
+        // For demo purposes, reject all other logins
+        // In production, you would:
+        // 1. Look up user in database
+        // 2. Verify password hash
+        // 3. Generate JWT token
+
+        res.status(401).json({
+            success: false,
+            error: 'Invalid email or password'
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to log in'
         });
     }
 });
