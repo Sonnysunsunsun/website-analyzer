@@ -79,14 +79,18 @@
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: box-shadow 0.3s, filter 0.3s;
             cursor: pointer;
             border: none;
             display: inline-block;
+            position: relative;
+            z-index: 10;
+            min-height: 44px;
+            line-height: 1.2;
         }
 
         .btn-primary {
@@ -97,6 +101,7 @@
         .btn-primary:hover {
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             filter: brightness(1.1);
+            transform: none !important;
         }
 
         .btn-outline {
@@ -485,7 +490,7 @@
         <div class="trial-form">
             <div class="trial-input-group">
                 <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
-                <button class="btn" style="background: white; color: var(--primary);" onclick="tryAnalysis()">
+                <button class="btn" style="background: white; color: var(--primary); padding: 14px 28px; min-width: 160px;" onclick="tryAnalysis()" type="button">
                     Try Free Analysis
                 </button>
             </div>
