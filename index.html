@@ -66,10 +66,21 @@
         }
 
         .hero {
-            padding: 80px 0;
-            text-align: center;
+            padding: 60px 0 40px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            min-height: 600px;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: left;
         }
 
         .hero h1 {
@@ -89,8 +100,7 @@
         .input-group {
             display: flex;
             gap: 12px;
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 500px;
             animation: fadeInUp 1s ease;
         }
 
@@ -370,7 +380,307 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
+        /* Metrics Bar */
+        .metrics-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .metrics-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Live Demo Styles */
+        .live-demo {
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .demo-browser {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .browser-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #0f0f23;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 10px;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff605c; }
+        .dot.yellow { background: #ffbd44; }
+        .dot.green { background: #00ca4e; }
+
+        .browser-url {
+            flex: 1;
+            margin-left: 20px;
+            background: #16213e;
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: #8b8b8b;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        .demo-content {
+            background: white;
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-website {
+            position: relative;
+        }
+
+        .demo-header {
+            background: linear-gradient(90deg, #e0e0e0 0%, #d0d0d0 100%);
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-nav {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .nav-item {
+            width: 60px;
+            height: 10px;
+            background: #bbb;
+            border-radius: 5px;
+        }
+
+        .demo-hero-section {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .demo-text {
+            width: 200px;
+            height: 12px;
+            background: #cbd5e1;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .demo-text.short {
+            width: 120px;
+        }
+
+        .demo-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .demo-card {
+            height: 60px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        /* Scanning Animation */
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            animation: scanVertical 3s linear infinite;
+        }
+
+        @keyframes scanVertical {
+            0% { top: -3px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .scan-highlight {
+            position: absolute;
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10b981;
+            border-radius: 4px;
+            opacity: 0;
+            animation: highlight 3s linear infinite;
+        }
+
+        .scan-highlight:nth-child(2) {
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 60px;
+            animation-delay: 0.5s;
+        }
+
+        .scan-highlight:nth-child(3) {
+            top: 100px;
+            left: 20px;
+            right: 20px;
+            height: 120px;
+            animation-delay: 1s;
+        }
+
+        .scan-highlight:nth-child(4) {
+            bottom: 20px;
+            left: 20px;
+            width: 30%;
+            height: 60px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes highlight {
+            0%, 20% { opacity: 0; }
+            25%, 40% { opacity: 1; }
+            45%, 100% { opacity: 0; }
+        }
+
+        .analysis-bubbles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            animation: bubbleFloat 3s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(1) {
+            top: -50px;
+            left: -80px;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(2) {
+            top: -50px;
+            right: -80px;
+            animation-delay: 0.5s;
+        }
+
+        .bubble:nth-child(3) {
+            bottom: -50px;
+            left: -80px;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(4) {
+            bottom: -50px;
+            right: -80px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes bubbleFloat {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            20% { opacity: 1; transform: scale(1) translateY(0); }
+            80% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.8) translateY(-20px); }
+        }
+
+        .bubble.success {
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .bubble.warning {
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .bubble.info {
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
         @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .input-group {
+                max-width: 100%;
+                flex-direction: column;
+            }
+
             .hero h1 {
                 font-size: 32px;
             }
@@ -379,8 +689,17 @@
                 font-size: 16px;
             }
 
-            .input-group {
+            .metrics-container {
                 flex-direction: column;
+                gap: 20px;
+            }
+
+            .metric-value {
+                font-size: 28px;
+            }
+
+            .live-demo {
+                max-width: 100%;
             }
 
             .metrics-grid {
@@ -508,60 +827,6 @@
             height: auto;
         }
 
-        @keyframes scanLine {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(140px);
-            }
-        }
-
-        .scan-line {
-            animation: scanLine 3s ease-in-out infinite;
-        }
-
-        @keyframes scanHighlight {
-            0% {
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 1;
-                filter: brightness(1.2);
-            }
-            100% {
-                opacity: 0.3;
-            }
-        }
-
-        .scan-element {
-            animation: scanHighlight 2s ease-in-out infinite;
-        }
-
-        @keyframes checkAppear {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .check-mark {
-            opacity: 0;
-            animation: checkAppear 0.5s ease-out forwards;
-            animation-iteration-count: infinite;
-            animation-duration: 3s;
-        }
-
-        @media (max-width: 768px) {
-            .scan-demo svg {
-                width: 100%;
-                max-width: 350px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -578,62 +843,89 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Analyze Any Website in Seconds</h1>
-            <p>Get comprehensive insights about SEO, performance, security, and more</p>
+            <div class="hero-container">
+                <!-- Left Side: Content -->
+                <div class="hero-content">
+                    <h1>Analyze Any Website in Seconds</h1>
+                    <p>Get instant AI-powered insights to boost conversions, SEO rankings, and user experience</p>
 
-            <div class="input-group">
-                <input type="text" class="url-input" placeholder="Enter website URL (e.g., example.com)" id="urlInput">
-                <button class="analyze-btn" onclick="analyzeWebsite()">Try Free Analysis</button>
+                    <div class="input-group">
+                        <input type="text" class="url-input" placeholder="Enter website URL (e.g., example.com)" id="urlInput">
+                        <button class="analyze-btn" onclick="analyzeWebsite()">Try Free Analysis</button>
+                    </div>
+
+                    <div class="error-message" id="errorMessage"></div>
+                </div>
+
+                <!-- Right Side: Live Demo -->
+                <div class="live-demo">
+                    <div class="demo-browser">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <div class="dot red"></div>
+                                <div class="dot yellow"></div>
+                                <div class="dot green"></div>
+                            </div>
+                            <div class="browser-url" id="demoUrl">example-store.com</div>
+                        </div>
+                        <div class="demo-content">
+                            <div class="demo-website">
+                                <!-- Website mockup -->
+                                <div class="demo-header">
+                                    <div class="demo-nav">
+                                        <div class="nav-item"></div>
+                                        <div class="nav-item"></div>
+                                        <div class="nav-item"></div>
+                                    </div>
+                                </div>
+                                <div class="demo-hero-section">
+                                    <div class="demo-text"></div>
+                                    <div class="demo-text short"></div>
+                                </div>
+                                <div class="demo-cards">
+                                    <div class="demo-card"></div>
+                                    <div class="demo-card"></div>
+                                    <div class="demo-card"></div>
+                                </div>
+                            </div>
+
+                            <!-- Scanning overlay -->
+                            <div class="scan-overlay">
+                                <div class="scan-line"></div>
+                                <div class="scan-highlight"></div>
+                                <div class="scan-highlight"></div>
+                                <div class="scan-highlight"></div>
+                                <div class="scan-highlight"></div>
+                            </div>
+
+                            <!-- Analysis bubbles -->
+                            <div class="analysis-bubbles">
+                                <div class="bubble success">✓ SEO Score: 92</div>
+                                <div class="bubble info">⚡ Speed: 1.2s</div>
+                                <div class="bubble warning">⚠ Mobile: 78</div>
+                                <div class="bubble success">🔒 Secure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="error-message" id="errorMessage"></div>
-
-            <!-- Visual Demo Animation -->
-            <div class="scan-demo-container" style="margin-top: 3rem;">
-                <div class="scan-demo">
-                    <svg width="400" height="250" viewBox="0 0 400 250">
-                        <!-- Browser Window -->
-                        <rect x="50" y="30" width="300" height="180" rx="10" fill="#ffffff" stroke="#e5e7eb" stroke-width="2"/>
-                        <rect x="50" y="30" width="300" height="35" rx="10" fill="#f3f4f6"/>
-                        <circle cx="70" cy="48" r="5" fill="#ef4444"/>
-                        <circle cx="85" cy="48" r="5" fill="#f59e0b"/>
-                        <circle cx="100" cy="48" r="5" fill="#10b981"/>
-
-                        <!-- URL Bar -->
-                        <rect x="120" y="40" width="200" height="15" rx="5" fill="white"/>
-                        <text x="125" y="51" font-family="Arial" font-size="11" fill="#6b7280">yourwebsite.com</text>
-
-                        <!-- Page Content Elements -->
-                        <rect x="70" y="85" width="260" height="25" rx="5" fill="#e0e7ff" class="scan-element"/>
-                        <rect x="70" y="120" width="120" height="20" rx="5" fill="#ddd6fe" class="scan-element" style="animation-delay: 0.3s"/>
-                        <rect x="200" y="120" width="120" height="20" rx="5" fill="#ddd6fe" class="scan-element" style="animation-delay: 0.5s"/>
-                        <rect x="70" y="150" width="180" height="20" rx="5" fill="#c7d2fe" class="scan-element" style="animation-delay: 0.7s"/>
-                        <rect x="260" y="150" width="60" height="35" rx="8" fill="#818cf8" class="scan-element" style="animation-delay: 0.9s"/>
-
-                        <!-- Scanning Laser Effect -->
-                        <line x1="50" y1="70" x2="350" y2="70" stroke="url(#scanGradient)" stroke-width="3" opacity="0.8" class="scan-line"/>
-
-                        <!-- Gradient for laser -->
-                        <defs>
-                            <linearGradient id="scanGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="transparent"/>
-                                <stop offset="50%" stop-color="#10b981"/>
-                                <stop offset="100%" stop-color="transparent"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Analysis Icons -->
-                        <g class="analysis-icons">
-                            <text x="200" y="20" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark">✓ SEO</text>
-                            <text x="120" y="20" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark" style="animation-delay: 0.5s">✓ Speed</text>
-                            <text x="280" y="20" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark" style="animation-delay: 1s">✓ Security</text>
-                            <text x="200" y="230" text-anchor="middle" font-size="14" fill="#10b981" class="check-mark" style="animation-delay: 1.5s">✓ Mobile</text>
-                        </g>
-                    </svg>
+            <!-- Metrics Bar -->
+            <div class="metrics-bar">
+                <div class="metrics-container">
+                    <div class="metric-item">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">&lt;1min</div>
+                        <div class="metric-label">Analysis Time</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">50+</div>
+                        <div class="metric-label">Metrics Analyzed</div>
+                    </div>
                 </div>
-                <p style="text-align: center; margin-top: 1rem; color: #6b7280; font-size: 0.95rem;">
-                    AI analyzes your website for conversions, SEO, performance & more
-                </p>
             </div>
         </div>
     </section>
@@ -703,6 +995,60 @@
 
     <script>
         let currentAnalysisData = null;
+
+        // Demo animation functionality
+        const demoUrls = [
+            'shopify-store.com',
+            'tech-startup.io',
+            'fashion-blog.com',
+            'saas-product.app',
+            'local-business.net'
+        ];
+
+        const demoScores = [
+            { seo: 92, speed: '1.2s', mobile: 78, secure: true },
+            { seo: 85, speed: '0.8s', mobile: 94, secure: true },
+            { seo: 76, speed: '2.1s', mobile: 82, secure: false },
+            { seo: 94, speed: '0.9s', mobile: 91, secure: true },
+            { seo: 88, speed: '1.5s', mobile: 86, secure: true }
+        ];
+
+        let currentDemoIndex = 0;
+
+        // Initialize demo animation
+        function initializeDemo() {
+            setInterval(() => {
+                currentDemoIndex = (currentDemoIndex + 1) % demoUrls.length;
+                updateDemo();
+            }, 4000);
+        }
+
+        function updateDemo() {
+            const urlElement = document.getElementById('demoUrl');
+            const bubbles = document.querySelectorAll('.bubble');
+
+            // Update URL
+            if (urlElement) {
+                urlElement.textContent = demoUrls[currentDemoIndex];
+            }
+
+            // Update scores
+            const scores = demoScores[currentDemoIndex];
+            if (bubbles.length >= 4) {
+                bubbles[0].innerHTML = `✓ SEO Score: ${scores.seo}`;
+                bubbles[1].innerHTML = `⚡ Speed: ${scores.speed}`;
+                bubbles[2].innerHTML = `⚠ Mobile: ${scores.mobile}`;
+                bubbles[3].innerHTML = scores.secure ? `🔒 Secure` : `⚠ Not Secure`;
+
+                // Update bubble classes based on scores
+                bubbles[0].className = scores.seo >= 85 ? 'bubble success' : 'bubble warning';
+                bubbles[2].className = scores.mobile >= 85 ? 'bubble success' : 'bubble warning';
+                bubbles[3].className = scores.secure ? 'bubble success' : 'bubble warning';
+            }
+        }
+
+        // Start demo on page load
+        document.addEventListener('DOMContentLoaded', initializeDemo);
 
         async function analyzeWebsite() {
             const urlInput = document.getElementById('urlInput');

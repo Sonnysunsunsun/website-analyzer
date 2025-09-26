@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SiteAnalyzer Pro - AI-Powered Website Analysis Tool</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>WebAnalyzer Pro - Professional Website Analysis Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,40 +15,44 @@
         }
 
         :root {
-            --primary: #5B21B6;
-            --primary-dark: #4C1D95;
-            --primary-light: #7C3AED;
-            --secondary: #EC4899;
-            --dark: #111827;
-            --gray: #6B7280;
-            --light-gray: #F3F4F6;
-            --white: #FFFFFF;
-            --success: #10B981;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --border: #e2e8f0;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--dark);
-            overflow-x: hidden;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-            padding: 16px 0;
-        }
-
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -55,360 +61,310 @@
         .logo {
             font-size: 24px;
             font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--gray);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
             color: var(--primary);
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
             text-decoration: none;
-            transition: box-shadow 0.3s, filter 0.3s;
-            cursor: pointer;
-            border: none;
-            display: inline-block;
-            position: relative;
-            z-index: 10;
-            min-height: 44px;
-            line-height: 1.2;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            filter: brightness(1.1);
-            transform: none !important;
-        }
-
-        .btn-outline {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
         }
 
         .hero {
-            margin-top: 80px;
-            padding: 100px 24px;
+            padding: 60px 0 40px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            min-height: 600px;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -50%;
-            width: 200%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff10" d="M0,32L48,53.3C96,75,192,117,288,122.7C384,128,480,96,576,90.7C672,85,768,107,864,112C960,117,1056,107,1152,90.7C1248,75,1344,53,1392,42.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            animation: wave 10s linear infinite;
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        @keyframes wave {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .hero-content {
+            text-align: left;
         }
 
         .hero h1 {
-            font-size: 56px;
-            font-weight: 900;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease;
+            text-align: center;
+            width: 100%;
         }
 
         .hero p {
             font-size: 20px;
-            margin-bottom: 40px;
             opacity: 0.95;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeInUp 0.8s;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease;
         }
 
-        .hero-buttons {
+        .input-group {
             display: flex;
-            gap: 16px;
-            justify-content: center;
-            animation: fadeInUp 1s;
-        }
-
-        .hero-buttons .btn {
-            padding: 16px 32px;
-            font-size: 18px;
-        }
-
-        .trial-form {
-            margin-top: 60px;
-            animation: fadeInUp 1.2s;
-        }
-
-        .trial-input-group {
-            display: flex;
-            max-width: 500px;
-            margin: 0 auto;
             gap: 12px;
+            max-width: 500px;
+            animation: fadeInUp 1s ease;
         }
 
-        .trial-input {
+        .url-input {
             flex: 1;
             padding: 16px 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-
-        .trial-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .trial-input:focus {
+            border: 2px solid transparent;
+            border-radius: 12px;
             outline: none;
-            border-color: white;
-            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .features {
-            padding: 80px 24px;
-            background: var(--white);
+        .url-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .analyze-btn {
+            padding: 16px 32px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+            min-width: 150px;
         }
 
-        .section-header {
+        .analyze-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .analyze-btn:disabled {
+            background: var(--secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
             text-align: center;
-            margin-bottom: 60px;
+            padding: 60px 0;
         }
 
-        .section-header h2 {
-            font-size: 42px;
+        .loading.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .results {
+            display: none;
+            padding: 60px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .score-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .score-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .score-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
             font-weight: 800;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 16px;
         }
 
-        .section-header p {
-            font-size: 18px;
-            color: var(--gray);
+        .metric-title {
+            font-weight: 600;
+            color: var(--text);
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            padding: 32px;
-            border-radius: 16px;
-            background: var(--light-gray);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
+        .metric-score {
             font-size: 24px;
-            margin-bottom: 12px;
+            font-weight: 700;
         }
 
-        .feature-card p {
-            color: var(--gray);
-            line-height: 1.6;
+        .metric-details {
+            color: var(--text-light);
+            font-size: 14px;
         }
 
-        .stats {
-            padding: 60px 24px;
-            background: var(--gradient);
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 32px;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .stat-item p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        .pricing {
-            padding: 80px 24px;
-            background: var(--light-gray);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .pricing-card {
-            background: white;
+        .recommendations {
+            background: var(--card-bg);
             border-radius: 16px;
-            padding: 40px 32px;
-            text-align: center;
-            position: relative;
-            transition: all 0.3s;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
 
-        .pricing-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        .recommendations h2 {
+            margin-bottom: 24px;
+            font-size: 24px;
         }
 
-        .pricing-card.featured {
-            background: var(--gradient);
-            color: white;
-            transform: scale(1.05);
+        .recommendation-item {
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--primary);
+            background: var(--bg);
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
 
-        .pricing-badge {
-            position: absolute;
-            top: -12px;
-            right: 24px;
-            background: var(--secondary);
-            color: white;
-            padding: 4px 16px;
+        .recommendation-item:hover {
+            transform: translateX(4px);
+        }
+
+        .recommendation-item.critical {
+            border-left-color: var(--danger);
+        }
+
+        .recommendation-item.high {
+            border-left-color: var(--warning);
+        }
+
+        .recommendation-item.medium {
+            border-left-color: var(--primary);
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
-        }
-
-        .pricing-card h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-        }
-
-        .price {
-            font-size: 48px;
-            font-weight: 800;
+            text-transform: uppercase;
             margin-bottom: 8px;
         }
 
-        .price span {
-            font-size: 20px;
-            font-weight: 400;
+        .priority-badge.critical {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
         }
 
-        .pricing-features {
-            list-style: none;
-            margin: 32px 0;
+        .priority-badge.high {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
         }
 
-        .pricing-features li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        .priority-badge.medium {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
         }
 
-        .pricing-card.featured .pricing-features li {
-            border-bottom-color: rgba(255, 255, 255, 0.1);
+        .export-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
         }
 
-        .footer {
-            padding: 60px 24px 32px;
-            background: var(--dark);
+        .export-btn {
+            padding: 12px 24px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: var(--primary);
             color: white;
+            border-color: var(--primary);
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 32px;
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+            animation: shake 0.5s ease;
         }
 
-        .footer-section h4 {
-            margin-bottom: 16px;
-        }
-
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
+        .error-message.active {
             display: block;
-            padding: 4px 0;
-            transition: color 0.3s;
         }
 
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -416,18 +372,8 @@
             }
         }
 
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            color: #DC2626;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-top: 16px;
-            display: none;
-            animation: shake 0.5s;
-        }
-
-        .error-message.active {
-            display: block;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @keyframes shake {
@@ -436,238 +382,680 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        .loading {
-            display: none;
-            margin-top: 20px;
+        /* Metrics Bar */
+        .metrics-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .loading.active {
-            display: block;
+        .metrics-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 40px;
         }
 
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Live Demo Styles */
+        .live-demo {
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .demo-browser {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .browser-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #0f0f23;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 10px;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .dot.red { background: #ff605c; }
+        .dot.yellow { background: #ffbd44; }
+        .dot.green { background: #00ca4e; }
+
+        .browser-url {
+            flex: 1;
+            margin-left: 20px;
+            background: #16213e;
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: #8b8b8b;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        .demo-content {
+            background: white;
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-website {
+            position: relative;
+        }
+
+        .demo-header {
+            background: linear-gradient(90deg, #e0e0e0 0%, #d0d0d0 100%);
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-nav {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .nav-item {
+            width: 60px;
+            height: 10px;
+            background: #bbb;
+            border-radius: 5px;
+        }
+
+        .demo-hero-section {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .demo-text {
+            width: 200px;
+            height: 12px;
+            background: #cbd5e1;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .demo-text.short {
+            width: 120px;
+        }
+
+        .demo-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .demo-card {
+            height: 60px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        /* Scanning Animation */
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            animation: scanVertical 3s linear infinite;
+        }
+
+        @keyframes scanVertical {
+            0% { top: -3px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .scan-highlight {
+            position: absolute;
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10b981;
+            border-radius: 4px;
+            opacity: 0;
+            animation: highlight 3s linear infinite;
+        }
+
+        .scan-highlight:nth-child(2) {
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 60px;
+            animation-delay: 0.5s;
+        }
+
+        .scan-highlight:nth-child(3) {
+            top: 100px;
+            left: 20px;
+            right: 20px;
+            height: 120px;
+            animation-delay: 1s;
+        }
+
+        .scan-highlight:nth-child(4) {
+            bottom: 20px;
+            left: 20px;
+            width: 30%;
+            height: 60px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes highlight {
+            0%, 20% { opacity: 0; }
+            25%, 40% { opacity: 1; }
+            45%, 100% { opacity: 0; }
+        }
+
+        .analysis-bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            background: white;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: bubbleFloat 4s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        .bubble:nth-child(1) {
+            top: 30px;
+            left: 25px;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(2) {
+            top: 70px;
+            right: 35px;
+            animation-delay: 0.7s;
+        }
+
+        .bubble:nth-child(3) {
+            bottom: 80px;
+            left: 40px;
+            animation-delay: 1.4s;
+        }
+
+        .bubble:nth-child(4) {
+            bottom: 40px;
+            right: 25px;
+            animation-delay: 2.1s;
+        }
+
+        @keyframes bubbleFloat {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            20% { opacity: 1; transform: scale(1) translateY(0); }
+            80% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.8) translateY(-20px); }
+        }
+
+        .bubble.success {
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .bubble.warning {
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .bubble.info {
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .hero p { font-size: 16px; }
-            .hero-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
-            .hero-buttons .btn { width: 100%; }
-            .nav-links { display: none; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .pricing-card.featured { transform: scale(1); }
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .input-group {
+                max-width: 100%;
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .metrics-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .metric-value {
+                font-size: 28px;
+            }
+
+            .live-demo {
+                max-width: 100%;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
         }
+        /* AI Analysis Styles */
+        .ai-analysis {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .ai-analysis h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .ai-analysis h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .ai-score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-score-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-score-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-score-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .ai-score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .ai-insights, .ai-quick-wins, .ai-priority-actions {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .ai-content strong {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .ai-quick-win {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+
+        .ai-priority-action {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .priority-number {
+            display: inline-block;
+            min-width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #ffd700;
+            color: #764ba2;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* Scanning Demo Animations */
+        .scan-demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scan-demo {
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .scan-demo svg {
+            max-width: 100%;
+            height: auto;
+        }
+
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <div class="nav-container">
-            <a href="/" class="logo">SiteAnalyzer Pro</a>
-            <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="/login" class="nav-link">Login</a>
-                <a href="/signup" class="btn btn-primary">Sign Up</a>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">WebAnalyzer Pro</a>
+                <nav>
+                    <a href="#" onclick="resetAnalysis()" style="color: var(--text-light); text-decoration: none;">New Analysis</a>
+                </nav>
             </div>
         </div>
-    </nav>
+    </header>
 
     <section class="hero">
-        <h1>Analyze Any Website in Seconds</h1>
-        <p>Get instant insights on SEO, performance, security, and mobile optimization with our AI-powered analysis engine</p>
-
-        <div class="trial-form">
-            <div class="trial-input-group">
-                <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
-                <button class="btn" style="background: white; color: var(--primary); padding: 14px 28px; min-width: 160px;" onclick="tryAnalysis()" type="button">
-                    Try Free Analysis
-                </button>
-            </div>
-            <div class="error-message" id="errorMessage"></div>
-            <div class="loading" id="loadingSpinner">
-                <div class="spinner"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>50K+</h3>
-                    <p>Websites Analyzed</p>
+            <div class="hero-container">
+                <!-- Left Side: Content -->
+                <div class="hero-content">
+                    <h1>Analyze Any Website in Seconds</h1>
+                    <p>Get instant AI-powered insights to boost conversions, SEO rankings, and user experience</p>
+
+                    <div class="input-group">
+                        <input type="text" class="url-input" placeholder="Enter website URL (e.g., example.com)" id="urlInput">
+                        <button class="analyze-btn" onclick="analyzeWebsite()">Try Free Analysis</button>
+                    </div>
+
+                    <div class="error-message" id="errorMessage"></div>
                 </div>
-                <div class="stat-item">
-                    <h3>10K+</h3>
-                    <p>Active Users</p>
+
+                <!-- Right Side: Live Demo -->
+                <div class="live-demo">
+                    <div class="demo-browser">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <div class="dot red"></div>
+                                <div class="dot yellow"></div>
+                                <div class="dot green"></div>
+                            </div>
+                            <div class="browser-url" id="demoUrl">example-store.com</div>
+                        </div>
+                        <div class="demo-content">
+                            <div class="demo-website">
+                                <!-- Website mockup -->
+                                <div class="demo-header">
+                                    <div class="demo-nav">
+                                        <div class="nav-item"></div>
+                                        <div class="nav-item"></div>
+                                        <div class="nav-item"></div>
+                                    </div>
+                                </div>
+                                <div class="demo-hero-section">
+                                    <div class="demo-text"></div>
+                                    <div class="demo-text short"></div>
+                                </div>
+                                <div class="demo-cards">
+                                    <div class="demo-card"></div>
+                                    <div class="demo-card"></div>
+                                    <div class="demo-card"></div>
+                                </div>
+                            </div>
+
+                            <!-- Scanning overlay -->
+                            <div class="scan-overlay">
+                                <div class="scan-line"></div>
+                                <div class="scan-highlight"></div>
+                                <div class="scan-highlight"></div>
+                                <div class="scan-highlight"></div>
+                                <div class="scan-highlight"></div>
+                            </div>
+
+                            <!-- Analysis bubbles -->
+                            <div class="analysis-bubbles">
+                                <div class="bubble success">✓ SEO Score: 92</div>
+                                <div class="bubble info">⚡ Speed: 1.2s</div>
+                                <div class="bubble warning">⚠ Mobile: 78</div>
+                                <div class="bubble success">🔒 Secure</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <h3>99.9%</h3>
-                    <p>Uptime</p>
-                </div>
-                <div class="stat-item">
-                    <h3><1s</h3>
-                    <p>Analysis Time</p>
+            </div>
+
+            <!-- Metrics Bar -->
+            <div class="metrics-bar">
+                <div class="metrics-container">
+                    <div class="metric-item">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">&lt;1min</div>
+                        <div class="metric-label">Analysis Time</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">10x</div>
+                        <div class="metric-label">Conversion Boost</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features" id="features">
+    <section class="loading" id="loadingSection">
         <div class="container">
-            <div class="section-header">
-                <h2>Everything You Need to Optimize Your Website</h2>
-                <p>Comprehensive analysis powered by advanced AI and real browser testing</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>SEO Analysis</h3>
-                    <p>Complete SEO audit including meta tags, headings, alt text, structured data, and content optimization recommendations.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Performance Metrics</h3>
-                    <p>Detailed load time analysis, Core Web Vitals, resource optimization, and performance bottleneck identification.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Mobile Optimization</h3>
-                    <p>Mobile responsiveness testing, touch target analysis, viewport configuration, and mobile-specific recommendations.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Security Assessment</h3>
-                    <p>HTTPS verification, security headers analysis, vulnerability detection, and security best practices compliance.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Detailed Reports</h3>
-                    <p>Export comprehensive reports in PDF, JSON, or HTML format. White-label options available for agencies.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3>Developer API</h3>
-                    <p>RESTful API access for automated analysis, bulk operations, and integration with your existing tools.</p>
-                </div>
-            </div>
+            <div class="spinner"></div>
+            <h2>Analyzing Website...</h2>
+            <p style="color: var(--text-light); margin-top: 10px;">This may take up to 30 seconds</p>
         </div>
     </section>
 
-    <section class="pricing" id="pricing">
+    <section class="results" id="resultsSection">
         <div class="container">
-            <div class="section-header">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. No hidden fees.</p>
+            <div class="score-card">
+                <div class="score-circle">
+                    <svg width="200" height="200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+                        <circle id="scoreCircle" cx="100" cy="100" r="90" fill="none" stroke="url(#gradient)" stroke-width="10"
+                                stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="565"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="score-number" id="overallScore">0</div>
+                </div>
+                <div class="score-label">Overall Score</div>
             </div>
 
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Free</h3>
-                    <div class="price">$0<span>/month</span></div>
-                    <p style="color: var(--gray);">Perfect for trying out</p>
-                    <ul class="pricing-features">
-                        <li>✓ 3 analyses per month</li>
-                        <li>✓ Basic reports</li>
-                        <li>✓ Email support</li>
-                        <li>✗ API access</li>
-                        <li>✗ Export to PDF</li>
-                    </ul>
-                    <a href="/signup" class="btn btn-outline" style="width: 100%;">Start Free</a>
-                </div>
+            <div class="metrics-grid" id="metricsGrid"></div>
 
-                <div class="pricing-card featured">
-                    <span class="pricing-badge">COMING SOON</span>
-                    <h3>Professional</h3>
-                    <div class="price">$29<span>/month</span></div>
-                    <p style="opacity: 0.9;">For professionals</p>
-                    <ul class="pricing-features">
-                        <li>✓ Unlimited analyses</li>
-                        <li>✓ Advanced AI insights</li>
-                        <li>✓ Competitor analysis</li>
-                        <li>✓ Export reports</li>
-                        <li>✓ Priority support</li>
-                    </ul>
-                    <button class="btn" style="width: 100%; background: white; color: var(--primary); opacity: 0.6; cursor: not-allowed;" disabled>Coming Soon</button>
-                </div>
+            <div class="recommendations">
+                <h2>Recommendations</h2>
+                <div id="recommendationsList"></div>
+            </div>
 
-                <div class="pricing-card">
-                    <h3>Enterprise</h3>
-                    <div class="price">Custom</div>
-                    <p style="color: var(--gray);">For teams & agencies</p>
-                    <ul class="pricing-features">
-                        <li>✓ Everything in Pro</li>
-                        <li>✓ Custom AI models</li>
-                        <li>✓ White-label reports</li>
-                        <li>✓ Dedicated support</li>
-                        <li>✓ API access</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%; opacity: 0.6; cursor: not-allowed;" disabled>Contact Us</button>
+            <!-- AI Analysis Section -->
+            <div id="aiAnalysisSection" class="ai-analysis" style="display:none;">
+                <h2>🤖 AI-Powered Conversion Analysis</h2>
+                <div class="ai-analysis-container">
+                    <div class="ai-score-grid" id="aiScoreGrid"></div>
+                    <div class="ai-insights">
+                        <h3>💡 Expert Insights</h3>
+                        <div id="aiInsights"></div>
+                    </div>
+                    <div class="ai-quick-wins">
+                        <h3>🚀 Quick Wins (Implement Today)</h3>
+                        <div id="aiQuickWins"></div>
+                    </div>
+                    <div class="ai-priority-actions">
+                        <h3>🎯 Priority Actions</h3>
+                        <div id="aiPriorityActions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="export-buttons">
+                    <button class="export-btn" onclick="exportReport('json')">Export JSON</button>
+                    <button class="export-btn" onclick="exportReport('html')">Export HTML Report</button>
                 </div>
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Product</h4>
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="/docs">API Documentation</a>
-                <a href="/changelog">Changelog</a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Company</h4>
-                <a href="/about">About Us</a>
-                <a href="/blog">Blog</a>
-                <a href="/careers">Careers</a>
-                <a href="/contact">Contact</a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Resources</h4>
-                <a href="/guides">Guides</a>
-                <a href="/case-studies">Case Studies</a>
-                <a href="/webinars">Webinars</a>
-                <a href="/support">Support Center</a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Legal</h4>
-                <a href="/privacy">Privacy Policy</a>
-                <a href="/terms">Terms of Service</a>
-                <a href="/security">Security</a>
-                <a href="/gdpr">GDPR</a>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2024 SiteAnalyzer Pro. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script>
-        async function tryAnalysis() {
-            const urlInput = document.getElementById('trialUrl');
+        let currentAnalysisData = null;
+
+        // Demo animation functionality
+        const demoUrls = [
+            'shopify-store.com',
+            'tech-startup.io',
+            'fashion-blog.com',
+            'saas-product.app',
+            'local-business.net'
+        ];
+
+        const demoScores = [
+            { seo: 92, speed: '1.2s', mobile: 78, secure: true },
+            { seo: 85, speed: '0.8s', mobile: 94, secure: true },
+            { seo: 76, speed: '2.1s', mobile: 82, secure: false },
+            { seo: 94, speed: '0.9s', mobile: 91, secure: true },
+            { seo: 88, speed: '1.5s', mobile: 86, secure: true }
+        ];
+
+        let currentDemoIndex = 0;
+
+        // Initialize demo animation
+        function initializeDemo() {
+            setInterval(() => {
+                currentDemoIndex = (currentDemoIndex + 1) % demoUrls.length;
+                updateDemo();
+            }, 4000);
+        }
+
+        function updateDemo() {
+            const urlElement = document.getElementById('demoUrl');
+            const bubbles = document.querySelectorAll('.bubble');
+
+            // Update URL
+            if (urlElement) {
+                urlElement.textContent = demoUrls[currentDemoIndex];
+            }
+
+            // Update scores
+            const scores = demoScores[currentDemoIndex];
+            if (bubbles.length >= 4) {
+                bubbles[0].innerHTML = `✓ SEO Score: ${scores.seo}`;
+                bubbles[1].innerHTML = `⚡ Speed: ${scores.speed}`;
+                bubbles[2].innerHTML = `⚠ Mobile: ${scores.mobile}`;
+                bubbles[3].innerHTML = scores.secure ? `🔒 Secure` : `⚠ Not Secure`;
+
+                // Update bubble classes based on scores
+                bubbles[0].className = scores.seo >= 85 ? 'bubble success' : 'bubble warning';
+                bubbles[2].className = scores.mobile >= 85 ? 'bubble success' : 'bubble warning';
+                bubbles[3].className = scores.secure ? 'bubble success' : 'bubble warning';
+            }
+        }
+
+        // Start demo on page load
+        document.addEventListener('DOMContentLoaded', initializeDemo);
+
+        async function analyzeWebsite() {
+            const urlInput = document.getElementById('urlInput');
             const url = urlInput.value.trim();
 
             if (!url) {
@@ -675,8 +1063,14 @@
                 return;
             }
 
+            // Hide any previous errors
             hideError();
-            document.getElementById('loadingSpinner').classList.add('active');
+
+            // Show loading state
+            document.getElementById('loadingSection').classList.add('active');
+            document.getElementById('resultsSection').classList.remove('active');
+            document.querySelector('.analyze-btn').disabled = true;
+            document.querySelector('.analyze-btn').textContent = 'Analyzing...';
 
             try {
                 const response = await fetch('/api/analyze/trial', {
@@ -689,27 +1083,259 @@
 
                 const data = await response.json();
 
-                if (!response.ok) {
-                    if (response.status === 402) {
-                        showError('Free trial limit reached. Sign up to continue!');
-                        setTimeout(() => {
-                            window.location.href = '/signup';
-                        }, 2000);
-                    } else {
-                        throw new Error(data.error || 'Analysis failed');
-                    }
-                    return;
+                if (!response.ok || !data.success) {
+                    throw new Error(data.error || 'Analysis failed');
                 }
 
-                // Store results in sessionStorage and redirect to results page
-                sessionStorage.setItem('analysisResults', JSON.stringify(data));
-                window.location.href = '/results';
+                currentAnalysisData = data;
+                displayResults(data);
 
             } catch (error) {
-                showError(error.message || 'Failed to analyze website');
+                console.error('Analysis error:', error);
+                showError(error.message || 'Failed to analyze website. Please try again.');
             } finally {
-                document.getElementById('loadingSpinner').classList.remove('active');
+                document.getElementById('loadingSection').classList.remove('active');
+                document.querySelector('.analyze-btn').disabled = false;
+                document.querySelector('.analyze-btn').textContent = 'Analyze';
             }
+        }
+
+        function displayResults(data) {
+            // Show results section
+            document.getElementById('resultsSection').classList.add('active');
+
+            // Animate overall score
+            animateScore(data.overallScore);
+
+            // Display metrics
+            displayMetrics(data);
+
+            // Display recommendations
+            displayRecommendations(data.recommendations);
+
+            // Display AI Analysis if available
+            if (data.aiAnalysis && !data.aiAnalysis.error) {
+                displayAIAnalysis(data.aiAnalysis);
+            }
+        }
+
+        function animateScore(targetScore) {
+            const scoreElement = document.getElementById('overallScore');
+            const circle = document.getElementById('scoreCircle');
+
+            let currentScore = 0;
+            const increment = targetScore / 50;
+            const circumference = 2 * Math.PI * 90;
+
+            const interval = setInterval(() => {
+                currentScore += increment;
+                if (currentScore >= targetScore) {
+                    currentScore = targetScore;
+                    clearInterval(interval);
+                }
+
+                scoreElement.textContent = Math.round(currentScore);
+                const offset = circumference - (currentScore / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+
+                // Change color based on score
+                if (currentScore >= 80) {
+                    circle.style.stroke = '#10b981';
+                } else if (currentScore >= 60) {
+                    circle.style.stroke = '#f59e0b';
+                } else {
+                    circle.style.stroke = '#ef4444';
+                }
+            }, 20);
+        }
+
+        function displayMetrics(data) {
+            const metricsGrid = document.getElementById('metricsGrid');
+            metricsGrid.innerHTML = '';
+
+            const metrics = [
+                {
+                    title: 'SEO',
+                    score: data.seo.score,
+                    details: `Title: ${data.seo.title.length} chars | Images with Alt: ${data.seo.images.altCoverage}%`
+                },
+                {
+                    title: 'Performance',
+                    score: Math.max(0, 100 - (data.performance.loadTime / 100)),
+                    details: `Load Time: ${(data.performance.loadTime / 1000).toFixed(1)}s`
+                },
+                {
+                    title: 'Mobile',
+                    score: data.mobile.score,
+                    details: `Viewport: ${data.mobile.hasViewport ? 'Yes' : 'No'} | Touch Targets: ${data.mobile.touchTargets.adequatePercentage}%`
+                },
+                {
+                    title: 'Security',
+                    score: data.security.score,
+                    details: `HTTPS: ${data.security.isHTTPS ? 'Yes' : 'No'} | Headers: ${data.security.secureHeadersCount}/5`
+                },
+                {
+                    title: 'Content',
+                    score: data.content.score,
+                    details: `Words: ${data.content.wordCount} | CTAs: ${data.content.ctaButtons}`
+                },
+                {
+                    title: 'Technical',
+                    score: data.technical.score,
+                    details: `Sitemap: ${data.technical.hasSitemap ? 'Yes' : 'No'} | Size: ${data.technical.pageSize.mb}MB`
+                }
+            ];
+
+            metrics.forEach(metric => {
+                const card = document.createElement('div');
+                card.className = 'metric-card';
+                card.innerHTML = `
+                    <div class="metric-header">
+                        <div class="metric-title">${metric.title}</div>
+                        <div class="metric-score" style="color: ${getScoreColor(metric.score)}">${metric.score}/100</div>
+                    </div>
+                    <div class="metric-details">${metric.details}</div>
+                `;
+                metricsGrid.appendChild(card);
+            });
+        }
+
+        function displayRecommendations(recommendations) {
+            const list = document.getElementById('recommendationsList');
+            list.innerHTML = '';
+
+            recommendations.forEach(rec => {
+                const item = document.createElement('div');
+                item.className = `recommendation-item ${rec.priority.toLowerCase()}`;
+                item.innerHTML = `
+                    <span class="priority-badge ${rec.priority.toLowerCase()}">${rec.priority}</span>
+                    <h3 style="margin: 8px 0; font-size: 18px;">${rec.issue}</h3>
+                    <p style="color: var(--text-light); margin-bottom: 8px;">${rec.recommendation}</p>
+                    <div style="display: flex; gap: 16px; font-size: 14px; color: var(--text-light);">
+                        <span><strong>Impact:</strong> ${rec.impact}</span>
+                        <span><strong>Effort:</strong> ${rec.effort}</span>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function displayAIAnalysis(aiData) {
+            const section = document.getElementById('aiAnalysisSection');
+            section.style.display = 'block';
+
+            // Display AI scores
+            if (aiData.scores) {
+                const scoreGrid = document.getElementById('aiScoreGrid');
+                scoreGrid.innerHTML = '';
+
+                const scoreTypes = [
+                    { key: 'headline', label: 'Headline Conversion', icon: '📝' },
+                    { key: 'cta', label: 'CTA Effectiveness', icon: '🎯' },
+                    { key: 'trust', label: 'Trust Signals', icon: '🛡️' },
+                    { key: 'copy', label: 'Copy Persuasion', icon: '✍️' },
+                    { key: 'value', label: 'Value Clarity', icon: '💎' },
+                    { key: 'overall', label: 'Overall Potential', icon: '🏆' }
+                ];
+
+                scoreTypes.forEach(type => {
+                    const score = aiData.scores[type.key] || 0;
+                    const card = document.createElement('div');
+                    card.className = 'ai-score-card';
+                    card.innerHTML = `
+                        <div class="ai-score-icon">${type.icon}</div>
+                        <div class="ai-score-label">${type.label}</div>
+                        <div class="ai-score-value" style="color: ${getScoreColor(score)}">${score}/100</div>
+                    `;
+                    scoreGrid.appendChild(card);
+                });
+            }
+
+            // Display main recommendations
+            if (aiData.recommendations) {
+                const insights = document.getElementById('aiInsights');
+                insights.innerHTML = `<div class="ai-content">${formatAIContent(aiData.recommendations)}</div>`;
+            }
+
+            // Display quick wins
+            if (aiData.quickWins && aiData.quickWins.length > 0) {
+                const quickWinsEl = document.getElementById('aiQuickWins');
+                quickWinsEl.innerHTML = aiData.quickWins.map(win =>
+                    `<div class="ai-quick-win">${formatAIContent(win)}</div>`
+                ).join('');
+            }
+
+            // Display priority actions
+            if (aiData.priorityActions && aiData.priorityActions.length > 0) {
+                const priorityEl = document.getElementById('aiPriorityActions');
+                priorityEl.innerHTML = aiData.priorityActions.map((action, index) =>
+                    `<div class="ai-priority-action">
+                        <span class="priority-number">${index + 1}</span>
+                        ${formatAIContent(action)}
+                    </div>`
+                ).join('');
+            }
+        }
+
+        function formatAIContent(content) {
+            // Format AI content with proper line breaks and emphasis
+            return content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>')
+                .replace(/^/, '<p>')
+                .replace(/$/, '</p>');
+        }
+
+        function getScoreColor(score) {
+            if (score >= 80) return '#10b981';
+            if (score >= 60) return '#f59e0b';
+            return '#ef4444';
+        }
+
+        async function exportReport(format) {
+            if (!currentAnalysisData) {
+                showError('No analysis data to export');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/export', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        data: currentAnalysisData,
+                        format: format
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Export failed');
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `website-analysis.${format}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+            } catch (error) {
+                console.error('Export error:', error);
+                showError('Failed to export report');
+            }
+        }
+
+        function resetAnalysis() {
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('urlInput').value = '';
+            currentAnalysisData = null;
+            hideError();
         }
 
         function showError(message) {
@@ -722,15 +1348,11 @@
             document.getElementById('errorMessage').classList.remove('active');
         }
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
+        // Handle Enter key
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                analyzeWebsite();
+            }
         });
     </script>
 </body>
