@@ -199,29 +199,48 @@
         }
 
         .trial-btn {
-            padding: 16px 28px;
+            padding: 16px 32px;
             background: white;
             color: var(--primary);
-            border: 2px solid white;
-            border-radius: 8px;
-            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
-            min-width: 140px;
+            min-width: 120px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .trial-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .trial-btn:hover {
-            background: var(--primary);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .trial-btn:hover:before {
+            opacity: 1;
         }
 
         .trial-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .features {
@@ -292,8 +311,10 @@
 
         .stats {
             padding: 80px 24px;
-            background: rgba(139, 92, 246, 0.1);
+            background: white;
             margin-top: -40px;
+            position: relative;
+            z-index: 10;
         }
 
         .stats-grid {
@@ -308,14 +329,16 @@
         .stat-item h3 {
             font-size: 42px;
             font-weight: 800;
-            color: #FFC947;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 12px;
             letter-spacing: -1px;
         }
 
         .stat-item p {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
+            color: #6B7280;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
@@ -487,6 +510,204 @@
             to { transform: rotate(360deg); }
         }
 
+        .demo-section {
+            padding: 100px 24px;
+            background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+            overflow: hidden;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .demo-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .demo-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 60px;
+        }
+
+        .demo-screen {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            position: relative;
+        }
+
+        .demo-browser {
+            background: #1F2937;
+            border-radius: 12px 12px 0 0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: -40px -40px 30px -40px;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #EF4444; }
+        .dot-yellow { background: #F59E0B; }
+        .dot-green { background: #10B981; }
+
+        .browser-url {
+            flex: 1;
+            background: #374151;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: #9CA3AF;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+
+        .demo-website {
+            background: linear-gradient(180deg, #E0E7FF 0%, #F3F4F6 100%);
+            border-radius: 8px;
+            padding: 30px;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            animation: scanAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes scanAnimation {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(300px); opacity: 0; }
+        }
+
+        .metric-popup {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: popupAnimation 4s ease-in-out infinite;
+        }
+
+        .metric-popup.delay-1 { animation-delay: 0.5s; }
+        .metric-popup.delay-2 { animation-delay: 1s; }
+        .metric-popup.delay-3 { animation-delay: 1.5s; }
+        .metric-popup.delay-4 { animation-delay: 2s; }
+
+        @keyframes popupAnimation {
+            0%, 100% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            20%, 80% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .metric-popup.seo {
+            top: 40px;
+            left: 40px;
+        }
+
+        .metric-popup.speed {
+            top: 40px;
+            right: 40px;
+        }
+
+        .metric-popup.mobile {
+            bottom: 40px;
+            left: 40px;
+        }
+
+        .metric-popup.security {
+            bottom: 40px;
+            right: 40px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .metric-value.green { color: #10B981; }
+        .metric-value.yellow { color: #F59E0B; }
+        .metric-value.blue { color: #3B82F6; }
+        .metric-value.purple { color: #8B5CF6; }
+
+        .website-placeholder {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .placeholder-header {
+            width: 100%;
+            height: 60px;
+            background: white;
+            border-radius: 8px;
+            opacity: 0.6;
+        }
+
+        .placeholder-content {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .placeholder-sidebar {
+            width: 30%;
+            height: 180px;
+            background: white;
+            border-radius: 8px;
+            opacity: 0.4;
+        }
+
+        .placeholder-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .placeholder-text {
+            height: 20px;
+            background: white;
+            border-radius: 4px;
+            opacity: 0.3;
+        }
+
+        .placeholder-text.w-80 { width: 80%; }
+        .placeholder-text.w-60 { width: 60%; }
+        .placeholder-text.w-90 { width: 90%; }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
             .hero p { font-size: 16px; }
@@ -498,6 +719,11 @@
             .stats-grid { grid-template-columns: 1fr; gap: 32px; }
             .trial-input-group { flex-direction: column; }
             .trial-btn { width: 100%; }
+            .demo-screen { padding: 20px; }
+            .demo-browser { margin: -20px -20px 20px -20px; }
+            .metric-popup { transform: scale(0.8); }
+            .demo-title { font-size: 28px; }
+            .demo-subtitle { font-size: 16px; }
         }
     </style>
 </head>
@@ -508,7 +734,6 @@
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="/api-docs" class="nav-link">API Docs</a>
                 <a href="/login" class="btn btn-outline">Login</a>
                 <a href="/signup" class="btn btn-primary">Start Free</a>
             </div>
@@ -523,12 +748,66 @@
             <div class="trial-input-group">
                 <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
                 <button class="trial-btn" onclick="tryAnalysis()">
-                    Analyze Now
+                    Analyze
                 </button>
             </div>
             <div class="error-message" id="errorMessage"></div>
             <div class="loading" id="loadingSpinner">
                 <div class="spinner"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="demo-container">
+            <h2 class="demo-title">See It In Action</h2>
+            <p class="demo-subtitle">Watch as our AI analyzes websites in real-time</p>
+
+            <div class="demo-screen">
+                <div class="demo-browser">
+                    <div class="browser-dot dot-red"></div>
+                    <div class="browser-dot dot-yellow"></div>
+                    <div class="browser-dot dot-green"></div>
+                    <div class="browser-url">example-website.com</div>
+                </div>
+
+                <div class="demo-website">
+                    <div class="scan-line"></div>
+
+                    <div class="website-placeholder">
+                        <div class="placeholder-header"></div>
+                        <div class="placeholder-content">
+                            <div class="placeholder-sidebar"></div>
+                            <div class="placeholder-main">
+                                <div class="placeholder-text w-80"></div>
+                                <div class="placeholder-text w-60"></div>
+                                <div class="placeholder-text w-90"></div>
+                                <div class="placeholder-text w-60"></div>
+                                <div class="placeholder-text w-80"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-popup seo delay-1">
+                        <div class="metric-label">SEO Score</div>
+                        <div class="metric-value green">91</div>
+                    </div>
+
+                    <div class="metric-popup speed delay-2">
+                        <div class="metric-label">Speed</div>
+                        <div class="metric-value yellow">0.9s</div>
+                    </div>
+
+                    <div class="metric-popup mobile delay-3">
+                        <div class="metric-label">Mobile</div>
+                        <div class="metric-value blue">98%</div>
+                    </div>
+
+                    <div class="metric-popup security delay-4">
+                        <div class="metric-label">Security</div>
+                        <div class="metric-value purple">A+</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
