@@ -298,7 +298,7 @@
             border: 2px solid transparent;
             transition: all 0.3s;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .category-card:hover {
@@ -321,6 +321,7 @@
             cursor: help;
             margin-left: 8px;
             position: relative;
+            z-index: 10;
         }
 
         .tooltip-icon:hover {
@@ -341,11 +342,12 @@
             line-height: 1.5;
             white-space: normal;
             width: 280px;
-            z-index: 1000;
+            z-index: 9999;
             visibility: hidden;
             opacity: 0;
             transition: opacity 0.3s, visibility 0.3s;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
         }
 
         .tooltip-content::after {
@@ -361,6 +363,7 @@
         .tooltip-icon:hover .tooltip-content {
             visibility: visible;
             opacity: 1;
+            pointer-events: auto;
         }
 
         /* Color-coded values */
