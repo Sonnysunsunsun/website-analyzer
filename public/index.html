@@ -112,12 +112,34 @@
 
         .hero {
             margin-top: 80px;
-            padding: 100px 24px;
+            padding: 60px 24px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            text-align: center;
             position: relative;
             overflow: hidden;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .hero-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero::before {
@@ -137,10 +159,11 @@
         }
 
         .hero h1 {
-            font-size: 56px;
+            font-size: 48px;
             font-weight: 900;
             margin-bottom: 24px;
             animation: fadeInUp 0.6s;
+            line-height: 1.1;
         }
 
         .hero p {
@@ -172,8 +195,7 @@
 
         .trial-input-group {
             display: flex;
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 450px;
             gap: 12px;
         }
 
@@ -510,51 +532,36 @@
             to { transform: rotate(360deg); }
         }
 
-        .demo-section {
-            padding: 100px 24px;
-            background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
-            overflow: hidden;
-        }
-
-        .demo-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .demo-title {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .demo-subtitle {
-            font-size: 18px;
-            color: var(--gray);
-            margin-bottom: 60px;
-        }
-
         .demo-screen {
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 600px;
+            width: 100%;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
             position: relative;
+            animation: fadeInRight 1s;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .demo-browser {
             background: #1F2937;
             border-radius: 12px 12px 0 0;
-            padding: 12px 20px;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin: -40px -40px 30px -40px;
+            gap: 6px;
+            margin: -30px -30px 20px -30px;
         }
 
         .browser-dot {
@@ -708,8 +715,29 @@
         .placeholder-text.w-60 { width: 60%; }
         .placeholder-text.w-90 { width: 90%; }
 
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .trial-input-group {
+                margin: 0 auto;
+            }
+            .hero-demo {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
+            .hero {
+                padding: 40px 20px;
+                min-height: auto;
+            }
+            .hero h1 { font-size: 32px; }
             .hero p { font-size: 16px; }
             .hero-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
             .hero-buttons .btn { width: 100%; }
@@ -718,12 +746,13 @@
             .pricing-card.featured { transform: scale(1); }
             .stats-grid { grid-template-columns: 1fr; gap: 32px; }
             .trial-input-group { flex-direction: column; }
-            .trial-btn { width: 100%; }
-            .demo-screen { padding: 20px; }
-            .demo-browser { margin: -20px -20px 20px -20px; }
-            .metric-popup { transform: scale(0.8); }
-            .demo-title { font-size: 28px; }
-            .demo-subtitle { font-size: 16px; }
+            .trial-btn { width: 100%; border-radius: 8px; }
+            .demo-screen {
+                padding: 20px;
+                transform: scale(0.9);
+            }
+            .demo-browser { margin: -20px -20px 15px -20px; }
+            .metric-popup { transform: scale(0.85); }
         }
     </style>
 </head>
@@ -741,71 +770,70 @@
     </nav>
 
     <section class="hero">
-        <h1>Analyze Any Website in Seconds</h1>
-        <p>Get instant insights on SEO, performance, security, and mobile optimization with our AI-powered analysis engine</p>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Analyze Any Website in Seconds</h1>
+                <p>Get instant insights on SEO, performance, security, and mobile optimization with our AI-powered analysis engine</p>
 
-        <div class="trial-form">
-            <div class="trial-input-group">
-                <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
-                <button class="trial-btn" onclick="tryAnalysis()">
-                    Analyze
-                </button>
-            </div>
-            <div class="error-message" id="errorMessage"></div>
-            <div class="loading" id="loadingSpinner">
-                <div class="spinner"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="demo-section">
-        <div class="demo-container">
-            <h2 class="demo-title">See It In Action</h2>
-            <p class="demo-subtitle">Watch as our AI analyzes websites in real-time</p>
-
-            <div class="demo-screen">
-                <div class="demo-browser">
-                    <div class="browser-dot dot-red"></div>
-                    <div class="browser-dot dot-yellow"></div>
-                    <div class="browser-dot dot-green"></div>
-                    <div class="browser-url">example-website.com</div>
+                <div class="trial-form">
+                    <div class="trial-input-group">
+                        <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
+                        <button class="trial-btn" onclick="tryAnalysis()">
+                            Analyze
+                        </button>
+                    </div>
+                    <div class="error-message" id="errorMessage"></div>
+                    <div class="loading" id="loadingSpinner">
+                        <div class="spinner"></div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="demo-website">
-                    <div class="scan-line"></div>
+            <div class="hero-demo">
+                <div class="demo-screen">
+                    <div class="demo-browser">
+                        <div class="browser-dot dot-red"></div>
+                        <div class="browser-dot dot-yellow"></div>
+                        <div class="browser-dot dot-green"></div>
+                        <div class="browser-url">example-website.com</div>
+                    </div>
 
-                    <div class="website-placeholder">
-                        <div class="placeholder-header"></div>
-                        <div class="placeholder-content">
-                            <div class="placeholder-sidebar"></div>
-                            <div class="placeholder-main">
-                                <div class="placeholder-text w-80"></div>
-                                <div class="placeholder-text w-60"></div>
-                                <div class="placeholder-text w-90"></div>
-                                <div class="placeholder-text w-60"></div>
-                                <div class="placeholder-text w-80"></div>
+                    <div class="demo-website">
+                        <div class="scan-line"></div>
+
+                        <div class="website-placeholder">
+                            <div class="placeholder-header"></div>
+                            <div class="placeholder-content">
+                                <div class="placeholder-sidebar"></div>
+                                <div class="placeholder-main">
+                                    <div class="placeholder-text w-80"></div>
+                                    <div class="placeholder-text w-60"></div>
+                                    <div class="placeholder-text w-90"></div>
+                                    <div class="placeholder-text w-60"></div>
+                                    <div class="placeholder-text w-80"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="metric-popup seo delay-1">
-                        <div class="metric-label">SEO Score</div>
-                        <div class="metric-value green">91</div>
-                    </div>
+                        <div class="metric-popup seo delay-1">
+                            <div class="metric-label">SEO Score</div>
+                            <div class="metric-value green">91</div>
+                        </div>
 
-                    <div class="metric-popup speed delay-2">
-                        <div class="metric-label">Speed</div>
-                        <div class="metric-value yellow">0.9s</div>
-                    </div>
+                        <div class="metric-popup speed delay-2">
+                            <div class="metric-label">Speed</div>
+                            <div class="metric-value yellow">0.9s</div>
+                        </div>
 
-                    <div class="metric-popup mobile delay-3">
-                        <div class="metric-label">Mobile</div>
-                        <div class="metric-value blue">98%</div>
-                    </div>
+                        <div class="metric-popup mobile delay-3">
+                            <div class="metric-label">Mobile</div>
+                            <div class="metric-value blue">98%</div>
+                        </div>
 
-                    <div class="metric-popup security delay-4">
-                        <div class="metric-label">Security</div>
-                        <div class="metric-value purple">A+</div>
+                        <div class="metric-popup security delay-4">
+                            <div class="metric-label">Security</div>
+                            <div class="metric-value purple">A+</div>
+                        </div>
                     </div>
                 </div>
             </div>
