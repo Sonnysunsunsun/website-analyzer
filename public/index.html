@@ -112,50 +112,68 @@
 
         .hero {
             margin-top: 80px;
-            padding: 60px 24px 40px;
+            padding: 100px 24px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            min-height: 600px;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff10" d="M0,32L48,53.3C96,75,192,117,288,122.7C384,128,480,96,576,90.7C672,85,768,107,864,112C960,117,1056,107,1152,90.7C1248,75,1344,53,1392,42.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            animation: wave 10s linear infinite;
         }
 
-        .hero-content {
-            text-align: left;
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 24px;
             animation: fadeInUp 0.6s;
-            text-align: center;
-            width: 100%;
         }
 
         .hero p {
             font-size: 20px;
             margin-bottom: 40px;
             opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
             animation: fadeInUp 0.8s;
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            animation: fadeInUp 1s;
+        }
+
+        .hero-buttons .btn {
+            padding: 16px 32px;
+            font-size: 18px;
+        }
+
         .trial-form {
+            margin-top: 60px;
             animation: fadeInUp 1.2s;
         }
 
         .trial-input-group {
             display: flex;
             max-width: 500px;
+            margin: 0 auto;
             gap: 12px;
         }
 
@@ -163,311 +181,47 @@
             flex: 1;
             padding: 16px 20px;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--dark);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             backdrop-filter: blur(10px);
         }
 
         .trial-input::placeholder {
-            color: rgba(0, 0, 0, 0.5);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .trial-input:focus {
             outline: none;
             border-color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .trial-btn {
+            padding: 16px 28px;
             background: white;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Live Demo Styles */
-        .live-demo {
-            position: relative;
-            animation: fadeInUp 1.2s ease;
-        }
-
-        .demo-browser {
-            background: #1a1a2e;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .browser-header {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #0f0f23;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 10px;
-        }
-
-        .browser-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot.red { background: #ff605c; }
-        .dot.yellow { background: #ffbd44; }
-        .dot.green { background: #00ca4e; }
-
-        .browser-url {
-            flex: 1;
-            margin-left: 20px;
-            background: #16213e;
-            padding: 6px 12px;
-            border-radius: 4px;
-            color: #8b8b8b;
-            font-size: 13px;
-            font-family: monospace;
-        }
-
-        .demo-content {
-            background: white;
-            border-radius: 0 0 8px 8px;
-            padding: 20px;
-            height: 350px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-website {
-            position: relative;
-        }
-
-        .demo-header {
-            background: linear-gradient(90deg, #e0e0e0 0%, #d0d0d0 100%);
-            height: 60px;
+            color: var(--primary);
+            border: 2px solid white;
             border-radius: 8px;
-            margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-nav {
-            display: flex;
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .nav-item {
-            width: 60px;
-            height: 10px;
-            background: #bbb;
-            border-radius: 5px;
-        }
-
-        .demo-hero-section {
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-            height: 120px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            padding: 20px;
-            position: relative;
-        }
-
-        .demo-text {
-            width: 200px;
-            height: 12px;
-            background: #cbd5e1;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
-
-        .demo-text.short {
-            width: 120px;
-        }
-
-        .demo-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .demo-card {
-            height: 60px;
-            background: #f3f4f6;
-            border-radius: 6px;
-            padding: 10px;
-        }
-
-        /* Scanning Animation */
-        .scan-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-        }
-
-        .scan-line {
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #10b981, transparent);
-            animation: scanVertical 3s linear infinite;
-        }
-
-        @keyframes scanVertical {
-            0% { top: -3px; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .scan-highlight {
-            position: absolute;
-            background: rgba(16, 185, 129, 0.2);
-            border: 2px solid #10b981;
-            border-radius: 4px;
-            opacity: 0;
-            animation: highlight 3s linear infinite;
-        }
-
-        .scan-highlight:nth-child(2) {
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            height: 60px;
-            animation-delay: 0.5s;
-        }
-
-        .scan-highlight:nth-child(3) {
-            top: 100px;
-            left: 20px;
-            right: 20px;
-            height: 120px;
-            animation-delay: 1s;
-        }
-
-        .scan-highlight:nth-child(4) {
-            bottom: 20px;
-            left: 20px;
-            width: 30%;
-            height: 60px;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes highlight {
-            0%, 20% { opacity: 0; }
-            25%, 40% { opacity: 1; }
-            45%, 100% { opacity: 0; }
-        }
-
-        .analysis-bubbles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-        }
-
-        .bubble {
-            position: absolute;
-            background: white;
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            animation: bubbleFloat 4s ease-in-out infinite;
-            white-space: nowrap;
-            color: var(--dark);
-        }
-
-        .bubble:nth-child(1) {
-            top: 30px;
-            left: 25px;
-            animation-delay: 0s;
-        }
-
-        .bubble:nth-child(2) {
-            top: 70px;
-            right: 35px;
-            animation-delay: 0.7s;
-        }
-
-        .bubble:nth-child(3) {
-            bottom: 80px;
-            left: 40px;
-            animation-delay: 1.4s;
-        }
-
-        .bubble:nth-child(4) {
-            bottom: 40px;
-            right: 25px;
-            animation-delay: 2.1s;
-        }
-
-        @keyframes bubbleFloat {
-            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-            20% { opacity: 1; transform: scale(1) translateY(0); }
-            80% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.8) translateY(-20px); }
-        }
-
-        .bubble.success {
-            color: #10b981;
-            border: 1px solid #10b981;
-        }
-
-        .bubble.warning {
-            color: #f59e0b;
-            border: 1px solid #f59e0b;
-        }
-
-        .bubble.info {
-            color: #3b82f6;
-            border: 1px solid #3b82f6;
-        }
-
-        /* Metrics Bar */
-        .metrics-bar {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px 0;
-            margin-top: 60px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .metrics-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .metric-item {
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 36px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(to right, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-width: 140px;
         }
 
-        .metric-label {
-            font-size: 14px;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .trial-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .trial-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .features {
@@ -537,27 +291,34 @@
         }
 
         .stats {
-            padding: 60px 24px;
-            background: var(--gradient);
-            color: white;
+            padding: 80px 24px;
+            background: rgba(139, 92, 246, 0.1);
+            margin-top: -40px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            max-width: 900px;
+            margin: 0 auto;
             text-align: center;
         }
 
         .stat-item h3 {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 800;
-            margin-bottom: 8px;
+            color: #FFC947;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
         }
 
         .stat-item p {
-            font-size: 18px;
-            opacity: 0.9;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
         .pricing {
@@ -729,27 +490,14 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
             .hero p { font-size: 16px; }
-            .hero-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .hero-content { text-align: center; }
-            .trial-input-group {
-                flex-direction: column;
-                max-width: 100%;
-            }
-            .live-demo {
-                max-width: 100%;
-                display: none; /* Hide demo on mobile for better UX */
-            }
-            .metrics-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .metric-value { font-size: 28px; }
+            .hero-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
+            .hero-buttons .btn { width: 100%; }
             .nav-links { display: none; }
             .pricing-grid { grid-template-columns: 1fr; }
             .pricing-card.featured { transform: scale(1); }
+            .stats-grid { grid-template-columns: 1fr; gap: 32px; }
+            .trial-input-group { flex-direction: column; }
+            .trial-btn { width: 100%; }
         }
     </style>
 </head>
@@ -760,6 +508,7 @@
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="/api-docs" class="nav-link">API Docs</a>
                 <a href="/login" class="btn btn-outline">Login</a>
                 <a href="/signup" class="btn btn-primary">Start Free</a>
             </div>
@@ -767,98 +516,41 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-container">
-            <!-- Left Side: Content -->
-            <div class="hero-content">
-                <h1>Analyze Any Website in Seconds</h1>
-                <p>Get instant AI-powered insights to boost conversions, SEO rankings, and user experience</p>
+        <h1>Analyze Any Website in Seconds</h1>
+        <p>Get instant insights on SEO, performance, security, and mobile optimization with our AI-powered analysis engine</p>
 
-                <div class="trial-form">
-                    <div class="trial-input-group">
-                        <input type="text" class="trial-input" placeholder="Enter website URL" id="trialUrl">
-                        <button class="btn" style="background: white; color: var(--primary);" onclick="tryAnalysis()">
-                            Try Free Analysis
-                        </button>
-                    </div>
-                    <div class="error-message" id="errorMessage"></div>
-                    <div class="loading" id="loadingSpinner">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
+        <div class="trial-form">
+            <div class="trial-input-group">
+                <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
+                <button class="trial-btn" onclick="tryAnalysis()">
+                    Analyze Now
+                </button>
             </div>
-
-            <!-- Right Side: Live Demo -->
-            <div class="live-demo">
-                <div class="demo-browser">
-                    <div class="browser-header">
-                        <div class="browser-dots">
-                            <div class="dot red"></div>
-                            <div class="dot yellow"></div>
-                            <div class="dot green"></div>
-                        </div>
-                        <div class="browser-url" id="demoUrl">example-store.com</div>
-                    </div>
-                    <div class="demo-content">
-                        <div class="demo-website">
-                            <!-- Website mockup -->
-                            <div class="demo-header">
-                                <div class="demo-nav">
-                                    <div class="nav-item"></div>
-                                    <div class="nav-item"></div>
-                                    <div class="nav-item"></div>
-                                </div>
-                            </div>
-                            <div class="demo-hero-section">
-                                <div class="demo-text"></div>
-                                <div class="demo-text short"></div>
-                            </div>
-                            <div class="demo-cards">
-                                <div class="demo-card"></div>
-                                <div class="demo-card"></div>
-                                <div class="demo-card"></div>
-                            </div>
-                        </div>
-
-                        <!-- Scanning overlay -->
-                        <div class="scan-overlay">
-                            <div class="scan-line"></div>
-                            <div class="scan-highlight"></div>
-                            <div class="scan-highlight"></div>
-                            <div class="scan-highlight"></div>
-                            <div class="scan-highlight"></div>
-                        </div>
-
-                        <!-- Analysis bubbles -->
-                        <div class="analysis-bubbles">
-                            <div class="bubble success">✓ SEO Score: 92</div>
-                            <div class="bubble info">⚡ Speed: 1.2s</div>
-                            <div class="bubble warning">⚠ Mobile: 78</div>
-                            <div class="bubble success">🔒 Secure</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Metrics Bar -->
-        <div class="metrics-bar">
-            <div class="metrics-container">
-                <div class="metric-item">
-                    <div class="metric-value">99.9%</div>
-                    <div class="metric-label">Uptime</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">&lt; 90 seconds</div>
-                    <div class="metric-label">Analysis Time</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">10x</div>
-                    <div class="metric-label">Conversion Boost</div>
-                </div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="loading" id="loadingSpinner">
+                <div class="spinner"></div>
             </div>
         </div>
     </section>
 
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>Uptime</p>
+                </div>
+                <div class="stat-item">
+                    <h3>< 90 seconds</h3>
+                    <p>Analysis Time</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Metrics Analyzed</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="features" id="features">
         <div class="container">
@@ -870,38 +562,38 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🔍</div>
-                    <h3>SEO</h3>
-                    <p>Complete SEO audit including title length, meta descriptions, H1 tags, image alt text analysis, and structured data optimization.</p>
+                    <h3>SEO Analysis</h3>
+                    <p>Complete SEO audit including meta tags, headings, alt text, structured data, and content optimization recommendations.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>Performance</h3>
-                    <p>Load time analysis, DOM loaded metrics, Core Web Vitals, and comprehensive performance bottleneck identification.</p>
+                    <h3>Performance Metrics</h3>
+                    <p>Detailed load time analysis, Core Web Vitals, resource optimization, and performance bottleneck identification.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📱</div>
-                    <h3>Mobile</h3>
-                    <p>Viewport testing, responsive design analysis, mobile readiness checks, and touch target optimization recommendations.</p>
+                    <h3>Mobile Optimization</h3>
+                    <p>Mobile responsiveness testing, touch target analysis, viewport configuration, and mobile-specific recommendations.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
-                    <h3>Security</h3>
-                    <p>HTTPS verification, secure connection analysis, security headers, and vulnerability detection for safer websites.</p>
+                    <h3>Security Assessment</h3>
+                    <p>HTTPS verification, security headers analysis, vulnerability detection, and security best practices compliance.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3>Content</h3>
-                    <p>Word count analysis, CTA effectiveness, contact information detection, and content optimization recommendations.</p>
+                    <div class="feature-icon">📊</div>
+                    <h3>Detailed Reports</h3>
+                    <p>Export comprehensive reports in PDF, JSON, or HTML format. White-label options available for agencies.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3>Technical</h3>
-                    <p>Forms detection, technical score evaluation, site architecture analysis, and comprehensive status reporting.</p>
+                    <div class="feature-icon">🔧</div>
+                    <h3>Developer API</h3>
+                    <p>RESTful API access for automated analysis, bulk operations, and integration with your existing tools.</p>
                 </div>
             </div>
         </div>
@@ -923,6 +615,7 @@
                         <li>✓ 3 analyses per month</li>
                         <li>✓ Basic reports</li>
                         <li>✓ Email support</li>
+                        <li>✗ API access</li>
                         <li>✗ Export to PDF</li>
                     </ul>
                     <a href="/signup" class="btn btn-outline" style="width: 100%;">Start Free</a>
@@ -936,6 +629,7 @@
                     <ul class="pricing-features">
                         <li>✓ 50 analyses per month</li>
                         <li>✓ Advanced reports</li>
+                        <li>✓ API access</li>
                         <li>✓ Priority support</li>
                         <li>✓ Export to PDF</li>
                     </ul>
@@ -949,6 +643,7 @@
                     <ul class="pricing-features">
                         <li>✓ Unlimited analyses</li>
                         <li>✓ White-label reports</li>
+                        <li>✓ Advanced API</li>
                         <li>✓ Dedicated support</li>
                         <li>✓ Custom integrations</li>
                     </ul>
@@ -964,6 +659,7 @@
                 <h4>Product</h4>
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
+                <a href="/docs">API Documentation</a>
                 <a href="/changelog">Changelog</a>
             </div>
 
@@ -998,60 +694,6 @@
     </footer>
 
     <script>
-        // Demo animation functionality
-        const demoUrls = [
-            'shopify-store.com',
-            'tech-startup.io',
-            'fashion-blog.com',
-            'saas-product.app',
-            'local-business.net'
-        ];
-
-        const demoScores = [
-            { seo: 92, speed: '1.2s', mobile: 78, secure: true },
-            { seo: 85, speed: '0.8s', mobile: 94, secure: true },
-            { seo: 76, speed: '2.1s', mobile: 82, secure: false },
-            { seo: 94, speed: '0.9s', mobile: 91, secure: true },
-            { seo: 88, speed: '1.5s', mobile: 86, secure: true }
-        ];
-
-        let currentDemoIndex = 0;
-
-        // Initialize demo animation
-        function initializeDemo() {
-            setInterval(() => {
-                currentDemoIndex = (currentDemoIndex + 1) % demoUrls.length;
-                updateDemo();
-            }, 4000);
-        }
-
-        function updateDemo() {
-            const urlElement = document.getElementById('demoUrl');
-            const bubbles = document.querySelectorAll('.bubble');
-
-            // Update URL
-            if (urlElement) {
-                urlElement.textContent = demoUrls[currentDemoIndex];
-            }
-
-            // Update scores
-            const scores = demoScores[currentDemoIndex];
-            if (bubbles.length >= 4) {
-                bubbles[0].innerHTML = `✓ SEO Score: ${scores.seo}`;
-                bubbles[1].innerHTML = `⚡ Speed: ${scores.speed}`;
-                bubbles[2].innerHTML = `⚠ Mobile: ${scores.mobile}`;
-                bubbles[3].innerHTML = scores.secure ? `🔒 Secure` : `⚠ Not Secure`;
-
-                // Update bubble classes based on scores
-                bubbles[0].className = scores.seo >= 85 ? 'bubble success' : 'bubble warning';
-                bubbles[2].className = scores.mobile >= 85 ? 'bubble success' : 'bubble warning';
-                bubbles[3].className = scores.secure ? 'bubble success' : 'bubble warning';
-            }
-        }
-
-        // Start demo on page load
-        document.addEventListener('DOMContentLoaded', initializeDemo);
-
         async function tryAnalysis() {
             const urlInput = document.getElementById('trialUrl');
             const url = urlInput.value.trim();

@@ -287,7 +287,7 @@
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 24px;
+            gap: 32px;
             margin-bottom: 32px;
         }
 
@@ -306,6 +306,67 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
+        /* Tooltip styles */
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #6B7280;
+            font-size: 12px;
+            cursor: help;
+            margin-left: 8px;
+            position: relative;
+        }
+
+        .tooltip-icon:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tooltip-content {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 24, 39, 0.95);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: normal;
+            width: 280px;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .tooltip-content::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(17, 24, 39, 0.95);
+        }
+
+        .tooltip-icon:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Color-coded values */
+        .value-good { color: var(--success); font-weight: 600; }
+        .value-warning { color: var(--warning); font-weight: 600; }
+        .value-bad { color: var(--error); font-weight: 600; }
 
         .category-header {
             display: flex;
@@ -1058,6 +1119,56 @@
             }, 20);
         }
 
+        // Tooltip descriptions for each metric
+        const metricTooltips = {
+            'SEO Optimization': 'Search Engine Optimization affects how easily people find your site on Google. Better SEO means more organic traffic and higher conversion rates.',
+            'Performance': 'Page load speed directly impacts user experience. Faster sites have 2-3x higher conversion rates. Every second of delay costs 7% in conversions.',
+            'Mobile Experience': 'Over 60% of users browse on mobile. Mobile-optimized sites see 160% better conversion rates than desktop-only sites.',
+            'Security': 'HTTPS and security headers build trust. Secure sites see 13% higher conversion rates as users feel safe entering their information.',
+            'Content Quality': 'Quality content with clear CTAs drives action. Well-structured content can improve conversion rates by up to 86%.',
+            'Technical Health': 'Technical optimization ensures search engines can crawl your site and users have a smooth experience, indirectly boosting conversions.'
+        };
+
+        // Function to determine if a value is good, warning, or bad
+        function getValueStatus(label, value) {
+            const rules = {
+                'Title Tag': (val) => {
+                    const num = parseInt(val);
+                    return num >= 30 && num <= 60 ? 'good' : num < 30 || num > 90 ? 'bad' : 'warning';
+                },
+                'Meta Description': (val) => {
+                    const num = parseInt(val);
+                    return num >= 120 && num <= 160 ? 'good' : num < 50 || num > 200 ? 'bad' : 'warning';
+                },
+                'H1 Tags': (val) => val >= 1 ? 'good' : 'bad',
+                'Image Alt Tags': (val) => {
+                    const num = parseInt(val);
+                    return num >= 90 ? 'good' : num >= 50 ? 'warning' : 'bad';
+                },
+                'Internal Links': (val) => val >= 3 ? 'good' : val >= 1 ? 'warning' : 'bad',
+                'Load Time': (val) => {
+                    const num = parseInt(val);
+                    return num <= 2 ? 'good' : num <= 4 ? 'warning' : 'bad';
+                },
+                'Viewport Tag': (val) => val.includes('✅') ? 'good' : 'bad',
+                'Responsive': (val) => val.includes('✅') ? 'good' : 'bad',
+                'HTTPS': (val) => val.includes('✅') ? 'good' : 'bad',
+                'Word Count': (val) => {
+                    const num = parseInt(val);
+                    return num >= 300 && num <= 2000 ? 'good' : num < 100 || num > 5000 ? 'bad' : 'warning';
+                },
+                'CTAs Found': (val) => {
+                    const num = parseInt(val);
+                    return num >= 2 && num <= 5 ? 'good' : num === 0 || num > 10 ? 'bad' : 'warning';
+                }
+            };
+
+            if (rules[label]) {
+                return rules[label](value);
+            }
+            return '';
+        }
+
         function displayCategories(data) {
             const categories = [
                 {
@@ -1068,7 +1179,7 @@
                         { label: 'Title Tag', value: data.seo && data.seo.title ? `${data.seo.title.length} chars` : 'Missing' },
                         { label: 'Meta Description', value: data.seo && data.seo.metaDescription ? `${data.seo.metaDescription.length} chars` : 'Missing' },
                         { label: 'H1 Tags', value: data.seo && data.seo.headings ? data.seo.headings.h1Count : 0 },
-                        { label: 'Image Alt Tags', value: data.seo && data.seo.images ? `${data.seo.images.altCoverage}%` : 'N/A' },
+                        { label: 'Image Alt Tags', value: data.seo && data.seo.images ? `${Math.round(data.seo.images.altCoverage)}%` : 'N/A' },
                         { label: 'Internal Links', value: data.seo && data.seo.links ? data.seo.links.internal : 0 }
                     ]
                 },
@@ -1077,8 +1188,8 @@
                     icon: '⚡',
                     score: data.performance ? Math.round(data.performance.score) : 0,
                     details: [
-                        { label: 'Load Time', value: data.performance && data.performance.loadTime ? `${(data.performance.loadTime / 1000).toFixed(1)}s` : 'N/A' },
-                        { label: 'DOM Content', value: data.performance && data.performance.domContentLoaded ? `${(data.performance.domContentLoaded / 1000).toFixed(1)}s` : 'N/A' },
+                        { label: 'Load Time', value: data.performance && data.performance.loadTime ? `${Math.round(data.performance.loadTime / 1000)}s` : 'N/A' },
+                        { label: 'DOM Content', value: data.performance && data.performance.domContentLoaded ? `${Math.round(data.performance.domContentLoaded / 1000)}s` : 'N/A' },
                         { label: 'Page Size', value: '2.4 MB' },
                         { label: 'Requests', value: '47' },
                         { label: 'Cache Status', value: 'Not Optimized' }
@@ -1091,7 +1202,7 @@
                     details: [
                         { label: 'Viewport Tag', value: data.mobile && data.mobile.hasViewport ? '✅ Present' : '❌ Missing' },
                         { label: 'Responsive', value: data.mobile && data.mobile.responsive ? '✅ Yes' : '❌ No' },
-                        { label: 'Touch Targets', value: data.mobile && data.mobile.touchTargets ? `${data.mobile.touchTargets.adequate}% OK` : 'N/A' },
+                        { label: 'Touch Targets', value: data.mobile && data.mobile.touchTargets ? `${Math.round(data.mobile.touchTargets.adequatePercentage || 0)}% OK` : 'N/A' },
                         { label: 'Text Size', value: 'Readable' },
                         { label: 'Mobile Score', value: `${data.mobile ? data.mobile.score : 0}/100` }
                     ]
@@ -1144,6 +1255,11 @@
                             <h3 class="category-title">
                                 <span style="font-size: 24px;">${cat.icon}</span>
                                 ${cat.title}
+                                <span class="tooltip-icon">?
+                                    <div class="tooltip-content">
+                                        ${metricTooltips[cat.title] || 'This metric helps evaluate your website performance.'}
+                                    </div>
+                                </span>
                             </h3>
                             <div class="category-score ${scoreClass}">${cat.score}/100</div>
                         </div>
@@ -1151,12 +1267,16 @@
                             <div class="category-progress-fill" style="width: ${cat.score}%; background: ${progressColor};"></div>
                         </div>
                         <div class="category-details">
-                            ${cat.details.map(detail => `
-                                <div class="category-item">
-                                    <span>${detail.label}</span>
-                                    <strong>${detail.value}</strong>
-                                </div>
-                            `).join('')}
+                            ${cat.details.map(detail => {
+                                const valueStatus = getValueStatus(detail.label, detail.value);
+                                const valueClass = valueStatus ? `value-${valueStatus}` : '';
+                                return `
+                                    <div class="category-item">
+                                        <span>${detail.label}</span>
+                                        <strong class="${valueClass}">${detail.value}</strong>
+                                    </div>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
