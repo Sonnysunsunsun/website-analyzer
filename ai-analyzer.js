@@ -6,305 +6,301 @@ class AIWebsiteAnalyzer {
         this.openai = new OpenAI({
             apiKey: apiKey || process.env.OPENAI_API_KEY
         });
-
-        // Core analysis prompts that differentiate us
-        this.analysisPrompts = {
-            headline: {
-                system: `You are a world-class conversion copywriter who has increased conversions by 300%+ for Fortune 500 companies.
-                Your expertise comes from analyzing 10,000+ websites and A/B testing thousands of headlines.
-                You understand psychological triggers, urgency, clarity, and value proposition better than anyone.`,
-
-                user: (content) => `Analyze this website's headline and hero section:
-                "${content}"
-
-                Provide:
-                1. CONVERSION SCORE (0-100): Rate the headline's ability to convert visitors
-                2. PSYCHOLOGICAL TRIGGERS: What emotions/desires does it tap into (or miss)?
-                3. CLARITY SCORE (0-100): How clear is the value proposition?
-                4. THE REWRITE: Provide 2 high-converting alternatives with explanation
-                5. EXPECTED LIFT: % improvement you'd expect from the rewrite
-
-                Format as actionable insights, not generic advice.`
-            },
-
-            cta: {
-                system: `You are a CTA optimization specialist who has generated millions in revenue through button copy alone.
-                You've tested every variation: color, size, position, microcopy, urgency triggers.
-                You know exactly what makes people click and what creates friction.`,
-
-                user: (buttons) => `Analyze these CTAs found on the website:
-                ${buttons}
-
-                Provide:
-                1. CLICK PROBABILITY (0-100): How likely is a motivated visitor to click?
-                2. FRICTION POINTS: What psychological barriers exist?
-                3. URGENCY ANALYSIS: Is there appropriate urgency/scarcity?
-                4. THE FIX: Exact CTA copy that would convert 2-3x better
-                5. PLACEMENT CRITIQUE: Are they positioned optimally?
-
-                Give specific rewrites, not general principles.`
-            },
-
-            trust: {
-                system: `You are a trust & credibility expert who helps companies reduce bounce rates by 60%.
-                You understand trust signals, social proof, authority markers, and credibility indicators.
-                You know exactly what makes visitors trust a site in the first 3 seconds.`,
-
-                user: (content) => `Analyze trust elements on this website:
-                ${content}
-
-                Provide:
-                1. TRUST SCORE (0-100): How trustworthy does this site appear?
-                2. MISSING SIGNALS: What trust elements are critically missing?
-                3. RED FLAGS: What might make visitors suspicious?
-                4. QUICK WINS: 3 trust elements to add TODAY for immediate impact
-                5. SOCIAL PROOF AUDIT: How well is social proof utilized?
-
-                Be specific about implementation, not theoretical.`
-            },
-
-            copy: {
-                system: `You are a direct response copywriter trained by the legends: Gary Halbert, Eugene Schwartz, Claude Hopkins.
-                You've written copy that has sold $100M+ in products. You understand features vs benefits, emotional triggers,
-                and the exact words that make people buy. You can spot weak copy instantly.`,
-
-                user: (copy) => `Analyze this website copy:
-                ${copy}
-
-                Provide:
-                1. PERSUASION SCORE (0-100): How compelling is this copy?
-                2. BENEFITS VS FEATURES: Are they selling benefits or just listing features?
-                3. EMOTIONAL TRIGGERS: What emotions should be triggered but aren't?
-                4. POWER WORDS MISSING: What high-converting words should be added?
-                5. THE REWRITE: Provide 2 paragraphs of high-converting copy
-                6. READABILITY: Is it scannable? Grade level appropriate?
-
-                Give exact copy rewrites they can copy-paste.`
-            },
-
-            mobile: {
-                system: `You are a mobile UX expert who knows that 70% of traffic is mobile.
-                You've optimized hundreds of sites for mobile conversion, understanding thumb reach,
-                scroll depth, load times, and mobile-specific behaviors.`,
-
-                user: (analysis) => `Based on this mobile analysis:
-                ${analysis}
-
-                Provide:
-                1. MOBILE SCORE (0-100): How well optimized for mobile conversion?
-                2. THUMB ZONE ANALYSIS: Are CTAs in easy thumb reach?
-                3. LOAD TIME IMPACT: How is speed affecting mobile conversions?
-                4. CRITICAL FIXES: Top 3 mobile issues killing conversions
-                5. QUICK WINS: Changes that take <1 hour but boost mobile conversions 20%+`
-            },
-
-            value: {
-                system: `You are a value proposition expert who has helped 500+ startups find product-market fit.
-                You understand how to communicate value instantly, differentiate from competitors,
-                and make the offering irresistible. You know what makes people say "I need this NOW!"`,
-
-                user: (content) => `Analyze the value proposition on this website:
-                ${content}
-
-                Provide:
-                1. VALUE CLARITY (0-100): How clear is what you're offering?
-                2. DIFFERENTIATION SCORE: What makes this unique? (Or doesn't?)
-                3. THE 5-SECOND TEST: What would a visitor understand in 5 seconds?
-                4. COMPETITOR ADVANTAGE: How does this compare to alternatives?
-                5. THE PERFECT PITCH: Rewrite their value prop in 15 words or less
-                6. URGENCY CREATION: How to make visitors act NOW, not later
-
-                Make it so compelling they'd be stupid NOT to buy.`
-            },
-
-            overall: {
-                system: `You are the world's top website conversion consultant, charging $50,000 for audits.
-                You've analyzed sites for Amazon, Apple, and countless unicorn startups.
-                You see patterns others miss and know exactly what separates 2% conversion from 20%.
-                Your recommendations have generated billions in additional revenue.`,
-
-                user: (fullAnalysis) => `Based on this complete website analysis:
-                ${fullAnalysis}
-
-                Provide THE ULTIMATE CONVERSION ROADMAP:
-
-                1. OVERALL CONVERSION SCORE (0-100): Current conversion potential
-                2. THE #1 BOTTLENECK: The ONE thing killing conversions most
-                3. THE 3-DAY PLAN: What to fix in 3 days for 50%+ conversion lift
-                4. THE 30-DAY PLAN: Complete optimization for 200%+ lift
-                5. EXPECTED RESULTS: Specific % improvements for each change
-                6. COMPETITOR CRUSHING: How to dominate your market
-                7. THE MONEY LINE: One sentence they should add that will make them millions
-
-                Be brutally honest. Give them the $50,000 advice for free.
-                Make your advice so good they'll tell everyone about this tool.`
-            }
-        };
     }
 
     async analyzeWebsite(url, websiteContent) {
+        console.log('=== AI WEBSITE ANALYZER STARTING ===');
+        console.log('URL:', url);
+        console.log('Has HTML content:', !!websiteContent.html);
+
         const $ = cheerio.load(websiteContent.html);
 
-        // Extract key elements
-        const headline = $('h1').first().text() || $('h2').first().text();
-        const subheadline = $('h2').first().text() || $('h3').first().text();
+        // Extract key elements from the actual website
+        const headline = $('h1').first().text().trim() || $('h2').first().text().trim() || 'No headline found';
+        const subheadline = $('h2').first().text().trim() || $('h3').first().text().trim() || '';
+
         const ctaButtons = [];
         $('button, a.btn, a.button, [class*="cta"], [class*="button"]').each((i, el) => {
-            if (i < 5) ctaButtons.push($(el).text().trim());
-        });
-
-        const bodyText = $('p').slice(0, 5).map((i, el) => $(el).text()).get().join(' ');
-        const hasTestimonials = $('[class*="testimonial"], [class*="review"]').length > 0;
-        const hasTrustBadges = $('[class*="trust"], [class*="secure"], [class*="guarantee"]').length > 0;
-        const hasVideo = $('video, iframe[src*="youtube"], iframe[src*="vimeo"]').length > 0;
-
-        // Run parallel AI analyses
-        const analyses = await Promise.all([
-            this.analyzeHeadline(headline + ' ' + subheadline),
-            this.analyzeCTAs(ctaButtons.join(', ')),
-            this.analyzeTrust(`Testimonials: ${hasTestimonials}, Trust badges: ${hasTrustBadges}, Video: ${hasVideo}`),
-            this.analyzeCopy(bodyText),
-            this.analyzeValue(headline + ' ' + bodyText)
-        ]);
-
-        // Generate overall recommendations
-        const overallAnalysis = await this.generateOverallAnalysis({
-            headline: analyses[0],
-            ctas: analyses[1],
-            trust: analyses[2],
-            copy: analyses[3],
-            value: analyses[4],
-            url: url
-        });
-
-        return {
-            url: url,
-            timestamp: new Date().toISOString(),
-            scores: {
-                headline: this.extractScore(analyses[0]),
-                cta: this.extractScore(analyses[1]),
-                trust: this.extractScore(analyses[2]),
-                copy: this.extractScore(analyses[3]),
-                value: this.extractScore(analyses[4]),
-                overall: this.extractScore(overallAnalysis)
-            },
-            analysis: {
-                headline: analyses[0],
-                cta: analyses[1],
-                trust: analyses[2],
-                copy: analyses[3],
-                value: analyses[4]
-            },
-            recommendations: overallAnalysis,
-            quickWins: this.extractQuickWins(analyses),
-            priorityActions: this.extractPriorityActions(overallAnalysis)
-        };
-    }
-
-    async analyzeHeadline(content) {
-        const response = await this.openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [
-                { role: "system", content: this.analysisPrompts.headline.system },
-                { role: "user", content: this.analysisPrompts.headline.user(content) }
-            ],
-            temperature: 0.7,
-            max_tokens: 500
-        });
-        return response.choices[0].message.content;
-    }
-
-    async analyzeCTAs(buttons) {
-        const response = await this.openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [
-                { role: "system", content: this.analysisPrompts.cta.system },
-                { role: "user", content: this.analysisPrompts.cta.user(buttons) }
-            ],
-            temperature: 0.7,
-            max_tokens: 500
-        });
-        return response.choices[0].message.content;
-    }
-
-    async analyzeTrust(content) {
-        const response = await this.openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [
-                { role: "system", content: this.analysisPrompts.trust.system },
-                { role: "user", content: this.analysisPrompts.trust.user(content) }
-            ],
-            temperature: 0.7,
-            max_tokens: 500
-        });
-        return response.choices[0].message.content;
-    }
-
-    async analyzeCopy(copy) {
-        const response = await this.openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [
-                { role: "system", content: this.analysisPrompts.copy.system },
-                { role: "user", content: this.analysisPrompts.copy.user(copy) }
-            ],
-            temperature: 0.7,
-            max_tokens: 600
-        });
-        return response.choices[0].message.content;
-    }
-
-    async analyzeValue(content) {
-        const response = await this.openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [
-                { role: "system", content: this.analysisPrompts.value.system },
-                { role: "user", content: this.analysisPrompts.value.user(content) }
-            ],
-            temperature: 0.7,
-            max_tokens: 500
-        });
-        return response.choices[0].message.content;
-    }
-
-    async generateOverallAnalysis(allAnalyses) {
-        const fullAnalysis = JSON.stringify(allAnalyses, null, 2);
-        const response = await this.openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [
-                { role: "system", content: this.analysisPrompts.overall.system },
-                { role: "user", content: this.analysisPrompts.overall.user(fullAnalysis) }
-            ],
-            temperature: 0.7,
-            max_tokens: 1000
-        });
-        return response.choices[0].message.content;
-    }
-
-    extractScore(analysis) {
-        const scoreMatch = analysis.match(/(?:SCORE|Score)[:\s]*(\d+)/);
-        return scoreMatch ? parseInt(scoreMatch[1]) : null;
-    }
-
-    extractQuickWins(analyses) {
-        const quickWins = [];
-        analyses.forEach(analysis => {
-            const wins = analysis.match(/QUICK WINS?:([^]*?)(?:\n\n|\n[A-Z]|$)/i);
-            if (wins) {
-                quickWins.push(wins[1].trim());
+            if (i < 5) {
+                const text = $(el).text().trim();
+                if (text) ctaButtons.push(text);
             }
         });
-        return quickWins;
-    }
 
-    extractPriorityActions(overallAnalysis) {
-        const priorities = [];
-        const matches = overallAnalysis.match(/(?:#1|TOP|CRITICAL|PRIORITY)[^]*?(?:\n\n|\n[A-Z]|$)/gi);
-        if (matches) {
-            matches.forEach(match => {
-                priorities.push(match.trim());
+        const bodyText = $('p').slice(0, 10).map((i, el) => $(el).text().trim()).get().join(' ').substring(0, 2000);
+
+        const metaDescription = $('meta[name="description"]').attr('content') || '';
+        const title = $('title').text() || '';
+
+        const hasTestimonials = $('[class*="testimonial"], [class*="review"], [class*="feedback"]').length > 0;
+        const hasTrustBadges = $('[class*="trust"], [class*="secure"], [class*="guarantee"], [class*="certified"]').length > 0;
+        const hasVideo = $('video, iframe[src*="youtube"], iframe[src*="vimeo"]').length > 0;
+        const socialProof = $('[class*="customer"], [class*="client"], [class*="user"]').text().substring(0, 500);
+
+        console.log('Extracted data:');
+        console.log('- Headline:', headline.substring(0, 100));
+        console.log('- CTAs found:', ctaButtons.length);
+        console.log('- Body text length:', bodyText.length);
+        console.log('- Has testimonials:', hasTestimonials);
+
+        // ULTRA-DETAILED SYSTEM PROMPT - This is the core value driver
+        const systemPrompt = `You are an elite $50,000/audit conversion optimization consultant who has increased client revenues by over $2 billion.
+
+YOUR EXPERTISE:
+- Analyzed 10,000+ websites for companies like Amazon, Airbnb, Shopify
+- A/B tested thousands of headlines, CTAs, and page layouts
+- Deep understanding of psychology, persuasion, and consumer behavior
+- Expert in copywriting, UX, and conversion rate optimization
+
+ANALYSIS FRAMEWORK:
+
+1. HEADLINE & VALUE PROPOSITION ANALYSIS (Critical):
+   - Does the headline immediately communicate WHAT they offer?
+   - Does it tap into desires (make money, save time, look good, feel confident)?
+   - Is it specific or generic? ("Professional Web Design" = boring vs "Websites That Convert at 23%+ Higher Rates" = compelling)
+   - Clarity score: Can a 10-year-old understand what you do in 5 seconds?
+   - Urgency: Does it create FOMO or reason to act now?
+
+2. CALL-TO-ACTION OPTIMIZATION (High Impact):
+   - Button copy: Does it tell them exactly what happens next?
+   - "Submit" = BAD (vague, commitment) | "Get My Free Quote" = GOOD (specific, benefit-driven)
+   - Color psychology: Does button stand out without being garish?
+   - Placement: Above fold? Repeated throughout page?
+   - Friction: Does it ask for too much info too soon?
+
+3. TRUST & CREDIBILITY SIGNALS (Essential for Conversions):
+   - Social proof: Customer count, testimonials, reviews, ratings
+   - Authority markers: Awards, certifications, press mentions, "As Seen On"
+   - Risk reversal: Money-back guarantee, free trial, no credit card required
+   - Specific numbers: "Join 47,382 happy customers" beats "Join thousands"
+
+4. COPY & MESSAGING QUALITY (Make or Break):
+   - Benefits vs Features: "Save 10 hours/week" vs "Automated scheduling"
+   - Emotional triggers: Fear, greed, vanity, sloth (7 deadly sins sell!)
+   - Specificity: "$47/month" beats "affordable" | "3.4% average return" beats "great returns"
+   - Readability: Short sentences, bullet points, scannable
+   - Voice: Confident authority or desperate salesperson?
+
+5. CONVERSION PSYCHOLOGY:
+   - Scarcity: "Only 3 spots left" or "Ends Friday"
+   - Social proof: "Join 10,000+ users"
+   - Authority: Expert positioning, credentials
+   - Reciprocity: Give value before asking
+   - Commitment: Small yes leads to big yes
+
+CRITICAL SUCCESS FACTORS:
+- BE BRUTALLY SPECIFIC: Not "improve CTA" but "Change 'Submit' to 'Get My Free Analysis in 90 Seconds'"
+- QUANTIFY IMPACT: Always give % improvement estimates based on industry data
+- PRIORITIZE BY ROI: Quick wins first, then bigger changes
+- REAL EXAMPLES: Reference the ACTUAL content you see, not generic advice
+- BE HONEST: If something is terrible, say so (constructively)
+
+OUTPUT REQUIREMENTS:
+- Return ONLY valid JSON, no extra text
+- Be specific about THIS website, not generic
+- Give exact copy recommendations they can copy-paste
+- Estimate conversion lift for each change
+- Focus on money-making improvements, not just "best practices"`;
+
+        const userPrompt = `Analyze this website and provide ultra-specific, money-making recommendations.
+
+WEBSITE URL: ${url}
+
+ACTUAL CONTENT FROM THE SITE:
+- Page Title: "${title}"
+- Meta Description: "${metaDescription}"
+- Main Headline (H1): "${headline}"
+- Subheadline: "${subheadline}"
+- Call-to-Action Buttons: ${ctaButtons.length > 0 ? ctaButtons.map(cta => `"${cta}"`).join(', ') : 'None found'}
+- Body Copy Sample: "${bodyText.substring(0, 500)}..."
+- Has Testimonials: ${hasTestimonials ? 'Yes' : 'No'}
+- Has Trust Badges: ${hasTrustBadges ? 'Yes' : 'No'}
+- Has Video: ${hasVideo ? 'Yes' : 'No'}
+- Social Proof Text: "${socialProof}"
+
+Return ONLY valid JSON in this EXACT structure:
+
+{
+  "overallConversionScore": [0-100 - honest assessment of current conversion potential],
+  "headline": {
+    "current": "[Exact headline from the site]",
+    "score": [0-100],
+    "issues": [
+      "[Specific problem 1]",
+      "[Specific problem 2]"
+    ],
+    "rewrite1": "[First alternative - benefit-driven]",
+    "rewrite2": "[Second alternative - urgency-focused]",
+    "rationale": "[WHY these work better - psychology/data]",
+    "expectedLift": "[e.g., '+15-25% CTR improvement']"
+  },
+  "valueProposition": {
+    "clarity": [0-100 - can visitor understand what you do in 5 seconds?],
+    "differentiation": [0-100 - is it unique or generic?],
+    "current": "[What the site currently communicates]",
+    "improved": "[Clearer, more compelling version]",
+    "keyMessage": "[The ONE thing they should communicate]"
+  },
+  "callsToAction": {
+    "score": [0-100],
+    "currentCTAs": [
+      "[Exact CTA button text 1]",
+      "[Exact CTA button text 2]"
+    ],
+    "issues": [
+      "[Problem with current CTAs]"
+    ],
+    "recommendations": [
+      {
+        "current": "[Exact current CTA]",
+        "improved": "[Better version]",
+        "reason": "[Why it's better]",
+        "expectedLift": "[e.g., '+20-30% click rate']"
+      }
+    ]
+  },
+  "trustSignals": {
+    "score": [0-100],
+    "existing": [
+      "[What trust elements they have]"
+    ],
+    "missing": [
+      "[Critical trust elements to add]"
+    ],
+    "quickWins": [
+      {
+        "add": "[Specific trust element to add]",
+        "where": "[Where to place it]",
+        "impact": "[Expected conversion lift]"
+      }
+    ]
+  },
+  "copyQuality": {
+    "score": [0-100],
+    "strengths": [
+      "[What's working well in their copy]"
+    ],
+    "weaknesses": [
+      "[What's not working - be specific]"
+    ],
+    "rewrite": {
+      "section": "[Which section to rewrite]",
+      "current": "[Their current copy]",
+      "improved": "[Your improved version - make it compelling!]",
+      "why": "[Explanation of changes]"
+    }
+  },
+  "conversionBottlenecks": [
+    {
+      "issue": "[Specific problem hurting conversions]",
+      "severity": "CRITICAL|HIGH|MEDIUM",
+      "location": "[Where on the page]",
+      "fix": "[Exact fix with copy if applicable]",
+      "impactEstimate": "[e.g., '+25-40% improvement']",
+      "effortLevel": "LOW|MEDIUM|HIGH"
+    }
+  ],
+  "quickWins": [
+    {
+      "change": "[Specific action they can take today]",
+      "where": "[Location/element]",
+      "expectedImpact": "[Conversion % increase]",
+      "implementation": "[Step-by-step how to do it]"
+    }
+  ],
+  "thirtyDayRoadmap": {
+    "week1": [
+      "[Action item 1]",
+      "[Action item 2]"
+    ],
+    "week2": [
+      "[Action item 1]",
+      "[Action item 2]"
+    ],
+    "week3-4": [
+      "[Action item 1]",
+      "[Action item 2]"
+    ],
+    "expectedTotalLift": "[e.g., '+50-100% conversion rate improvement']"
+  },
+  "competitiveAdvantage": {
+    "currentPositioning": "[How they currently position themselves]",
+    "suggestedAngle": "[Unique angle they should take]",
+    "differentiators": [
+      "[What makes them special or could make them special]"
+    ]
+  },
+  "urgencyAndScarcity": {
+    "currentLevel": [0-100],
+    "recommendations": [
+      "[Specific urgency tactic to add]"
+    ]
+  },
+  "oneLiner": "[The single most impactful change that would drive the biggest conversion increase - be ULTRA specific]"
+}
+
+CRITICAL RULES:
+1. Analyze the ACTUAL content provided, not generic advice
+2. Give SPECIFIC copy rewrites they can use
+3. Estimate conversion lift for each recommendation
+4. Prioritize changes by ROI (quick wins first)
+5. Be honest but constructive if something is bad
+6. Reference real psychological principles and A/B test data
+7. Focus on MONEY-MAKING changes, not just "best practices"
+
+Remember: This analysis directly impacts their revenue. Make it worth $50,000.`;
+
+        try {
+            console.log('Calling OpenAI API...');
+            const response = await this.openai.chat.completions.create({
+                model: "gpt-4-turbo-preview",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: userPrompt }
+                ],
+                temperature: 0.7,
+                max_tokens: 3000,
+                response_format: { type: "json_object" }
             });
+
+            console.log('OpenAI response received');
+            const analysisText = response.choices[0].message.content;
+            console.log('Response length:', analysisText.length);
+
+            let analysis;
+            try {
+                analysis = JSON.parse(analysisText);
+                console.log('Successfully parsed JSON analysis');
+                console.log('Overall score:', analysis.overallConversionScore);
+            } catch (parseError) {
+                console.error('Failed to parse OpenAI JSON:', parseError);
+                console.error('Raw response:', analysisText.substring(0, 500));
+                throw new Error('Invalid JSON from OpenAI');
+            }
+
+            // Add metadata
+            analysis.url = url;
+            analysis.timestamp = new Date().toISOString();
+            analysis.model = "gpt-4-turbo-preview";
+
+            console.log('=== AI ANALYSIS COMPLETE ===');
+            return analysis;
+
+        } catch (error) {
+            console.error('=== AI ANALYZER ERROR ===');
+            console.error('Error type:', error.constructor.name);
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
+
+            // Return error object instead of throwing
+            return {
+                error: true,
+                message: 'AI analysis temporarily unavailable',
+                details: error.message,
+                url: url,
+                timestamp: new Date().toISOString()
+            };
         }
-        return priorities.slice(0, 3);
     }
 }
 
