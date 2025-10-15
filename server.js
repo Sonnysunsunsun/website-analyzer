@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
+const chromium = require('@sparticuz/chromium');
+const puppeteer = require('puppeteer-core');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const helmet = require('helmet');
@@ -189,10 +190,35 @@ class WebsiteAnalyzer {
     }
 
     async init() {
-        this.browser = await puppeteer.launch({
-            headless: 'new',
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        // Check if running in serverless environment (Vercel)
+        const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+
+        if (isServerless) {
+            // Use chromium for serverless
+            this.browser = await puppeteer.launch({
+                args: chromium.args,
+                defaultViewport: chromium.defaultViewport,
+                executablePath: await chromium.executablePath(),
+                headless: chromium.headless,
+            });
+        } else {
+            // Local development - fallback to regular puppeteer if available
+            try {
+                const puppeteerRegular = require('puppeteer');
+                this.browser = await puppeteerRegular.launch({
+                    headless: 'new',
+                    args: ['--no-sandbox', '--disable-setuid-sandbox']
+                });
+            } catch (e) {
+                // If puppeteer not available, use chromium
+                this.browser = await puppeteer.launch({
+                    args: chromium.args,
+                    defaultViewport: chromium.defaultViewport,
+                    executablePath: await chromium.executablePath(),
+                    headless: chromium.headless,
+                });
+            }
+        }
     }
 
     async cleanup() {
@@ -209,16 +235,42 @@ class WebsiteAnalyzer {
             }
 
             const page = await this.browser.newPage();
+
+            // Better bot evasion
             await page.setViewport({ width: 1920, height: 1080 });
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
+            await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36');
+
+            // Set extra HTTP headers to look more like a real browser
+            await page.setExtraHTTPHeaders({
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1'
+            });
 
             const performanceData = {};
             const startTime = Date.now();
 
+            // More flexible waiting strategy
             await page.goto(url, {
-                waitUntil: 'networkidle2',
-                timeout: 30000
+                waitUntil: 'domcontentloaded', // Changed from networkidle2 - faster and more reliable
+                timeout: 45000 // Increased timeout
+            }).catch(async (error) => {
+                // If main navigation fails, try a more lenient approach
+                if (error.name === 'TimeoutError') {
+                    console.log('Navigation timeout, trying with shorter timeout...');
+                    await page.goto(url, {
+                        waitUntil: 'load',
+                        timeout: 20000
+                    });
+                } else {
+                    throw error;
+                }
             });
+
+            // Wait a bit for dynamic content
+            await page.waitForTimeout(2000);
 
             const loadTime = Date.now() - startTime;
             const metrics = await page.metrics();
@@ -887,7 +939,23 @@ app.post('/api/analyze/trial', analysisLimiter, async (req, res) => {
 
     } catch (error) {
         console.error('Trial analysis error:', error);
-        res.status(500).json({ error: 'Analysis failed', message: error.message });
+
+        // Provide more helpful error messages
+        let errorMessage = 'Failed to analyze website. Please check the URL and try again.';
+
+        if (error.message.includes('timeout') || error.message.includes('Navigation')) {
+            errorMessage = 'Website took too long to load. The site may be blocking automated access or experiencing issues.';
+        } else if (error.message.includes('net::ERR')) {
+            errorMessage = 'Unable to connect to the website. Please check the URL is correct.';
+        } else if (error.message.includes('403') || error.message.includes('401')) {
+            errorMessage = 'Website is blocking our analyzer. This can happen with sites that have strict bot protection (e.g., Reddit, some social media).';
+        }
+
+        res.status(500).json({
+            error: 'Analysis failed',
+            message: errorMessage,
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 });
 

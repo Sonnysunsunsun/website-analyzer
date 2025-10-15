@@ -1323,19 +1323,34 @@
                 document.getElementById('limitedBanner').style.display = 'flex';
             }
 
-            // Calculate the actual average of all 6 category scores
-            const categoryScores = [
-                data.seo ? data.seo.score : 0,
-                data.performance ? data.performance.score : 0,
-                data.mobile ? data.mobile.score : 0,
-                data.security ? data.security.score : 0,
-                data.content ? data.content.score : 0,
-                data.technical ? data.technical.score : 0
-            ];
-            const averageScore = Math.round(categoryScores.reduce((a, b) => a + b, 0) / categoryScores.length);
+            // DEBUG: Log all data to console
+            console.log('=== FULL ANALYSIS DATA ===', data);
+            console.log('AI Analysis exists:', !!data.aiAnalysis);
+            console.log('AI Analysis error:', data.aiAnalysis?.error);
+            console.log('AI overallConversionScore:', data.aiAnalysis?.overallConversionScore);
+
+            // PRIORITY: Use AI's conversion score if available, otherwise fall back to technical average
+            let displayScore;
+            if (data.aiAnalysis && !data.aiAnalysis.error && data.aiAnalysis.overallConversionScore) {
+                displayScore = data.aiAnalysis.overallConversionScore;
+                console.log('✅ Using AI Conversion Score:', displayScore);
+            } else {
+                // Fallback to technical average
+                const categoryScores = [
+                    data.seo ? data.seo.score : 0,
+                    data.performance ? data.performance.score : 0,
+                    data.mobile ? data.mobile.score : 0,
+                    data.security ? data.security.score : 0,
+                    data.content ? data.content.score : 0,
+                    data.technical ? data.technical.score : 0
+                ];
+                displayScore = Math.round(categoryScores.reduce((a, b) => a + b, 0) / categoryScores.length);
+                console.log('⚠️ Using Technical Average (AI not available):', displayScore);
+                console.log('Reason:', data.aiAnalysis?.error || 'No AI analysis data');
+            }
 
             // Animate score
-            animateScore(averageScore);
+            animateScore(displayScore);
 
             // Display quick insights
             displayQuickInsights(data);

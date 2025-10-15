@@ -16,6 +16,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@sparticuz/chromium": "^131.0.1",
     "axios": "^1.12.2",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
@@ -30,7 +31,7 @@
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^4.2.1",
     "openai": "^5.23.1",
-    "puppeteer": "^24.22.3",
+    "puppeteer-core": "^24.22.3",
     "sqlite3": "^5.1.7",
     "stripe": "^18.5.0",
     "uuid": "^13.0.0"
