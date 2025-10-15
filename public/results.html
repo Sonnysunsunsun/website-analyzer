@@ -708,6 +708,290 @@
             gap: 16px;
         }
 
+        /* Real Examples Styles */
+        .example-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .example-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .example-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .example-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .example-current {
+            background: rgba(239, 68, 68, 0.2);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .example-improved {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+
+        .example-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .example-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: white;
+        }
+
+        .example-impact {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .example-impact i {
+            color: #fbbf24;
+        }
+
+        /* Issues Summary Navigation */
+        .issues-summary {
+            margin: 32px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, #fff5f5 0%, #fff1f2 100%);
+            border-radius: 12px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .issues-summary.good {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: #10b981;
+        }
+
+        .issues-summary-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .issues-count {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .issues-count-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ef4444;
+        }
+
+        .issues-count-number.good {
+            color: #10b981;
+        }
+
+        .issues-count-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .view-issues-btn {
+            padding: 10px 20px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-issues-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(91, 33, 182, 0.3);
+        }
+
+        .issues-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .issue-preview-item {
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .issue-preview-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .issue-preview-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .issue-preview-icon.warning {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .issue-preview-text {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* Sticky Quick Nav */
+        .quick-nav {
+            position: sticky;
+            top: 80px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+            z-index: 50;
+            display: none;
+        }
+
+        .quick-nav.visible {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .quick-nav-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .quick-nav-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .quick-nav-btn {
+            padding: 6px 12px;
+            background: var(--light-gray);
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--dark);
+        }
+
+        .quick-nav-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Expandable Example Cards */
+        .example-card.expandable {
+            cursor: pointer;
+        }
+
+        .example-card.expandable:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .example-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .example-details.expanded {
+            max-height: 500px;
+            margin-top: 16px;
+        }
+
+        .expand-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .expand-indicator i {
+            transition: transform 0.3s;
+        }
+
+        .example-card.expanded .expand-indicator i {
+            transform: rotate(180deg);
+        }
+
         /* Loading States */
         .skeleton {
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -774,6 +1058,25 @@
     </nav>
 
     <div class="container">
+        <!-- Sticky Quick Navigation -->
+        <div id="quickNav" class="quick-nav">
+            <div class="quick-nav-title">Quick Navigation</div>
+            <div class="quick-nav-buttons">
+                <button class="quick-nav-btn" onclick="scrollToSection('realExamples')">
+                    <i class="fas fa-lightbulb"></i> Real Examples
+                </button>
+                <button class="quick-nav-btn" onclick="scrollToSection('overview-tab')">
+                    <i class="fas fa-chart-pie"></i> Overview
+                </button>
+                <button class="quick-nav-btn" onclick="scrollToSection('recommendationsSection')">
+                    <i class="fas fa-list-check"></i> All Recommendations
+                </button>
+                <button class="quick-nav-btn" onclick="scrollToTop()">
+                    <i class="fas fa-arrow-up"></i> Back to Top
+                </button>
+            </div>
+        </div>
+
         <div id="limitedBanner" class="limited-banner" style="display: none;">
             <div>
                 <h3>🎉 Limited Trial Results</h3>
@@ -810,6 +1113,9 @@
             <p style="color: var(--gray);" id="timestamp">Analyzed just now</p>
 
             <div class="quick-insights" id="quickInsights"></div>
+
+            <!-- Quick Navigation to Issues -->
+            <div id="issuesSummary" class="issues-summary"></div>
 
             <div class="action-buttons">
                 <button class="btn btn-primary" onclick="downloadPDF()">
@@ -882,6 +1188,15 @@
                 <h3 style="margin-bottom: 24px;">Competitor Comparison</h3>
                 <div class="competitor-grid" id="competitorGrid"></div>
             </div>
+        </div>
+
+        <!-- Real Examples Section - NEW -->
+        <div class="recommendations" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; margin-bottom: 16px;">
+                <i class="fas fa-lightbulb"></i> Real Examples from Your Site
+            </h2>
+            <p style="opacity: 0.9; margin-bottom: 32px;">We analyzed your actual content and found these specific improvement opportunities:</p>
+            <div id="realExamples"></div>
         </div>
 
         <div class="recommendations" id="recommendationsSection">
@@ -1037,6 +1352,15 @@
 
             // Display recommendations
             displayRecommendations(data.recommendations);
+
+            // Display real examples from the website
+            displayRealExamples(data);
+
+            // Display issues summary navigation
+            displayIssuesSummary(data);
+
+            // Setup scroll listener for sticky nav
+            setupStickyNav();
         }
 
         function displayQuickInsights(data) {
@@ -1416,6 +1740,359 @@
             document.getElementById('competitorGrid').innerHTML = html;
         }
 
+        function displayIssuesSummary(data) {
+            const examples = [];
+
+            // Count issues (same logic as displayRealExamples)
+            if (data.seo && data.seo.title) {
+                const titleLength = data.seo.title.length;
+                if (titleLength < 30 || titleLength > 60) examples.push({ type: 'seo', title: 'Page Title', severity: 'high' });
+            }
+            if (data.seo && data.seo.metaDescription) {
+                const metaLength = data.seo.metaDescription.length;
+                if (metaLength < 120 || metaLength > 160) examples.push({ type: 'seo', title: 'Meta Description', severity: 'medium' });
+            }
+            if (data.seo && data.seo.images && data.seo.images.altCoverage < 90) {
+                examples.push({ type: 'seo', title: 'Missing Alt Tags', severity: 'medium' });
+            }
+            if (data.performance && data.performance.loadTime > 3000) {
+                examples.push({ type: 'performance', title: 'Slow Load Time', severity: 'critical' });
+            }
+            if (data.mobile && data.mobile.score < 70) {
+                examples.push({ type: 'mobile', title: 'Mobile Experience', severity: 'high' });
+            }
+            if (data.security && !data.security.isHTTPS) {
+                examples.push({ type: 'security', title: 'Not Secure (HTTP)', severity: 'critical' });
+            }
+            if (data.content && data.content.wordCount < 300) {
+                examples.push({ type: 'content', title: 'Low Content', severity: 'medium' });
+            }
+            if (data.content && data.content.ctaButtons < 2) {
+                examples.push({ type: 'content', title: 'Few CTAs', severity: 'high' });
+            }
+
+            const criticalCount = examples.filter(e => e.severity === 'critical').length;
+            const highCount = examples.filter(e => e.severity === 'high').length;
+            const totalIssues = examples.length;
+
+            const isGood = totalIssues === 0;
+            const summaryClass = isGood ? 'good' : '';
+
+            const html = `
+                <div class="issues-summary-header">
+                    <div class="issues-count">
+                        <div class="issues-count-number ${isGood ? 'good' : ''}">${totalIssues}</div>
+                        <div class="issues-count-label">
+                            ${isGood ? 'Issues Found - Great job!' : `Issue${totalIssues === 1 ? '' : 's'} Found`}
+                            ${criticalCount > 0 ? `<br><span style="color: #ef4444; font-size: 14px;">${criticalCount} Critical</span>` : ''}
+                        </div>
+                    </div>
+                    ${totalIssues > 0 ? `
+                        <button class="view-issues-btn" onclick="scrollToSection('realExamples')">
+                            <i class="fas fa-arrow-down"></i>
+                            View Issues & Fixes
+                        </button>
+                    ` : ''}
+                </div>
+                ${totalIssues > 0 ? `
+                    <div class="issues-preview">
+                        ${examples.slice(0, 4).map(issue => `
+                            <div class="issue-preview-item" onclick="scrollToSection('realExamples')">
+                                <div class="issue-preview-icon ${issue.severity === 'medium' ? 'warning' : ''}">
+                                    ${issue.type === 'seo' ? '🔍' : issue.type === 'performance' ? '⚡' : issue.type === 'mobile' ? '📱' : issue.type === 'security' ? '🔒' : '📄'}
+                                </div>
+                                <div class="issue-preview-text">${issue.title}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            `;
+
+            const summaryEl = document.getElementById('issuesSummary');
+            summaryEl.className = `issues-summary ${summaryClass}`;
+            summaryEl.innerHTML = html;
+        }
+
+        function displayRealExamples(data) {
+            const examples = [];
+
+            // PRIORITY: Use AI Analysis if available
+            if (data.aiAnalysis && !data.aiAnalysis.error) {
+                const ai = data.aiAnalysis;
+
+                // 1. Headline Analysis from AI
+                if (ai.headline && ai.headline.score < 70) {
+                    examples.push({
+                        icon: '💎',
+                        title: 'AI-Analyzed: Your Headline Needs Work',
+                        current: ai.headline.current || 'Current headline not captured',
+                        improved: ai.headline.rewrite1 || ai.headline.rewrite2 || 'Check AI analysis for suggestions',
+                        impact: ai.headline.expectedLift || '+15-25% improvement',
+                        reason: ai.headline.rationale || 'Not compelling or clear enough'
+                    });
+                }
+
+                // 2. CTA Analysis from AI
+                if (ai.callsToAction && ai.callsToAction.score < 70 && ai.callsToAction.recommendations) {
+                    const topCTA = ai.callsToAction.recommendations[0];
+                    if (topCTA) {
+                        examples.push({
+                            icon: '🎯',
+                            title: 'AI-Analyzed: Call-to-Action Issues',
+                            current: topCTA.current || 'Current CTA text',
+                            improved: topCTA.improved || 'Suggested CTA improvement',
+                            impact: topCTA.expectedLift || '+20-30% click rate',
+                            reason: topCTA.reason || 'Not action-oriented enough'
+                        });
+                    }
+                }
+
+                // 3. Trust Signals from AI
+                if (ai.trustSignals && ai.trustSignals.score < 70 && ai.trustSignals.quickWins && ai.trustSignals.quickWins.length > 0) {
+                    const topTrust = ai.trustSignals.quickWins[0];
+                    examples.push({
+                        icon: '🛡️',
+                        title: 'AI-Analyzed: Missing Trust Signals',
+                        current: `Current trust score: ${ai.trustSignals.score}/100`,
+                        improved: topTrust.add || 'Add testimonials, reviews, or trust badges',
+                        impact: topTrust.impact || '+10-20% conversions',
+                        reason: 'Visitors need social proof before converting'
+                    });
+                }
+
+                // 4. Copy Quality from AI
+                if (ai.copyQuality && ai.copyQuality.score < 70 && ai.copyQuality.rewrite) {
+                    examples.push({
+                        icon: '✍️',
+                        title: 'AI-Analyzed: Copy Quality Issues',
+                        current: ai.copyQuality.rewrite.current || 'Current copy sample',
+                        improved: ai.copyQuality.rewrite.improved || 'Improved copy version',
+                        impact: '+25-40% engagement',
+                        reason: ai.copyQuality.rewrite.why || 'Not benefit-focused or persuasive'
+                    });
+                }
+
+                // 5. Quick Wins from AI
+                if (ai.quickWins && ai.quickWins.length > 0) {
+                    ai.quickWins.slice(0, 2).forEach(win => {
+                        examples.push({
+                            icon: '⚡',
+                            title: `Quick Win: ${win.change || 'Immediate Improvement'}`,
+                            current: `Location: ${win.where || 'Various sections'}`,
+                            improved: win.change || 'Improvement suggestion',
+                            impact: win.expectedImpact || '+10-20% improvement',
+                            reason: 'Low effort, high impact change'
+                        });
+                    });
+                }
+
+                // 6. Conversion Bottlenecks from AI
+                if (ai.conversionBottlenecks && ai.conversionBottlenecks.length > 0) {
+                    const critical = ai.conversionBottlenecks.filter(b => b.severity === 'CRITICAL')[0];
+                    if (critical) {
+                        examples.push({
+                            icon: '🚨',
+                            title: `CRITICAL: ${critical.issue || 'Major Issue Found'}`,
+                            current: `Location: ${critical.location || 'Throughout site'}`,
+                            improved: critical.fix || 'See detailed fix instructions',
+                            impact: critical.impactEstimate || '+30-50% improvement',
+                            reason: 'This is actively hurting your conversions RIGHT NOW'
+                        });
+                    }
+                }
+
+                // 7. Value Proposition from AI
+                if (ai.valueProposition && ai.valueProposition.clarity < 70) {
+                    examples.push({
+                        icon: '💡',
+                        title: 'AI-Analyzed: Unclear Value Proposition',
+                        current: ai.valueProposition.current || 'Current messaging',
+                        improved: ai.valueProposition.improved || ai.valueProposition.keyMessage || 'Clearer value statement',
+                        impact: '+20-35% conversions',
+                        reason: 'Visitors can\'t understand what you offer in 5 seconds'
+                    });
+                }
+
+                // 8. ONE-LINER: The single most impactful change
+                if (ai.oneLiner) {
+                    examples.push({
+                        icon: '🎯',
+                        title: 'AI PRIORITY #1: Biggest Win',
+                        current: 'Current state',
+                        improved: ai.oneLiner,
+                        impact: 'HIGHEST IMPACT',
+                        reason: 'This single change will drive the biggest conversion increase'
+                    });
+                }
+            }
+
+            // FALLBACK: Use technical data if no AI analysis
+            if (examples.length === 0) {
+                // Example 1: Title Tag Analysis
+                if (data.seo && data.seo.title) {
+                    const titleLength = data.seo.title.length;
+                    if (titleLength < 30 || titleLength > 60) {
+                        examples.push({
+                            icon: '🏷️',
+                            title: 'Your Page Title Needs Work',
+                            current: data.seo.title,
+                            improved: generateBetterTitle(data.seo.title, data.url),
+                            impact: titleLength < 30 ? '+15-20% click-through rate from search' : '+10-15% CTR improvement',
+                            reason: titleLength < 30 ? 'Too short - not descriptive enough' : 'Too long - gets cut off in search results'
+                        });
+                    }
+                }
+
+                // Example 2: Meta Description
+                if (data.seo && data.seo.metaDescription) {
+                    const metaLength = data.seo.metaDescription.length;
+                    if (metaLength < 120 || metaLength > 160) {
+                        examples.push({
+                            icon: '📝',
+                            title: 'Meta Description Could Convert Better',
+                            current: data.seo.metaDescription,
+                            improved: generateBetterMeta(data.seo.metaDescription, data.url),
+                            impact: '+8-12% more clicks from Google',
+                            reason: metaLength < 120 ? 'Too short - not compelling enough' : 'Too long - gets truncated'
+                        });
+                    }
+                }
+
+                // Example 3: Missing Alt Tags
+                if (data.seo && data.seo.images && data.seo.images.altCoverage < 90) {
+                    examples.push({
+                        icon: '🖼️',
+                        title: 'Images Missing Alt Text',
+                        current: `${data.seo.images.withAlt} of ${data.seo.images.total} images have alt text (${Math.round(data.seo.images.altCoverage)}%)`,
+                        improved: 'Add descriptive alt text to all images for SEO and accessibility',
+                        impact: '+5-10% better Google rankings + accessibility compliance',
+                        reason: 'Search engines can\'t "see" images without alt text'
+                    });
+                }
+
+                // Example 4: Slow Load Time
+                if (data.performance && data.performance.loadTime > 3000) {
+                    const loadTimeSec = (data.performance.loadTime / 1000).toFixed(1);
+                    examples.push({
+                        icon: '⚡',
+                        title: 'Page Speed is Hurting Conversions',
+                        current: `Your site loads in ${loadTimeSec} seconds`,
+                        improved: 'Target: Under 2 seconds (compress images, minify code, use CDN)',
+                        impact: `Every 1 second faster = +7% conversions. Potential +${Math.round((loadTimeSec - 2) * 7)}% improvement`,
+                        reason: '53% of visitors leave if a page takes over 3 seconds'
+                    });
+                }
+
+                // Example 5: Mobile Issues
+                if (data.mobile && data.mobile.score < 70) {
+                    examples.push({
+                        icon: '📱',
+                        title: 'Mobile Experience Needs Fixing',
+                        current: `Mobile score: ${data.mobile.score}/100 ${!data.mobile.hasViewport ? '(Missing viewport tag!)' : ''}`,
+                        improved: 'Make buttons larger, improve touch targets, ensure responsive design',
+                        impact: '+25-40% mobile conversions (60% of traffic is mobile!)',
+                        reason: 'Most visitors are on phones - bad mobile = lost sales'
+                    });
+                }
+
+                // Example 6: No HTTPS
+                if (data.security && !data.security.isHTTPS) {
+                    examples.push({
+                        icon: '🔒',
+                        title: 'Critical: Your Site is Not Secure',
+                        current: 'HTTP only - browsers show "Not Secure" warning',
+                        improved: 'Enable HTTPS/SSL certificate (free with Let\'s Encrypt)',
+                        impact: '+13% conversions + required by Google for good rankings',
+                        reason: 'Visitors don\'t trust insecure sites with their information'
+                    });
+                }
+
+                // Example 7: Content Length
+                if (data.content && data.content.wordCount < 300) {
+                    examples.push({
+                        icon: '📄',
+                        title: 'Not Enough Content for SEO',
+                        current: `Only ${data.content.wordCount} words on this page`,
+                        improved: 'Aim for 500-1000 words with valuable, relevant content',
+                        impact: '+30-50% better search rankings',
+                        reason: 'Google favors comprehensive, helpful content'
+                    });
+                }
+
+                // Example 8: CTAs
+                if (data.content && data.content.ctaButtons < 2) {
+                    examples.push({
+                        icon: '🎯',
+                        title: 'Not Enough Calls-to-Action',
+                        current: `Found only ${data.content.ctaButtons} CTA button${data.content.ctaButtons === 1 ? '' : 's'}`,
+                        improved: 'Add 2-3 clear CTAs above fold: "Start Free Trial", "Get Started Now"',
+                        impact: '+20-35% conversion rate',
+                        reason: 'Make it crystal clear what action visitors should take'
+                    });
+                }
+            }
+
+            // Render examples
+            if (examples.length === 0) {
+                document.getElementById('realExamples').innerHTML = `
+                    <div class="example-card">
+                        <div class="example-text">
+                            Great job! Your site is performing well. Keep monitoring for continuous improvement.
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = examples.slice(0, 8).map(ex => `
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">${ex.icon}</div>
+                        <div class="example-title">${ex.title}</div>
+                    </div>
+
+                    <div class="example-current">
+                        <div class="example-label">❌ Current (What We Found)</div>
+                        <div class="example-text">${ex.current}</div>
+                    </div>
+
+                    <div class="example-improved">
+                        <div class="example-label">✅ Recommended Improvement</div>
+                        <div class="example-text">${ex.improved}</div>
+                    </div>
+
+                    <div class="example-impact">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Expected Impact: ${ex.impact}</span>
+                    </div>
+
+                    ${ex.reason ? `
+                        <div style="margin-top: 12px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 14px;">
+                            <strong>Why:</strong> ${ex.reason}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            document.getElementById('realExamples').innerHTML = html;
+        }
+
+        function generateBetterTitle(current, url) {
+            // Simple title improvement logic
+            const domain = url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+            if (current.length < 30) {
+                return `${current} | Professional Solutions & Services`;
+            }
+            return current.substring(0, 55) + '...';
+        }
+
+        function generateBetterMeta(current, url) {
+            if (current.length < 120) {
+                return `${current} Get started today with our proven solutions. Free consultation available.`;
+            }
+            return current.substring(0, 155) + '...';
+        }
+
         function displayRecommendations(recommendations) {
             if (!recommendations || recommendations.length === 0) {
                 document.getElementById('recommendationsList').innerHTML = '<p>No recommendations available.</p>';
@@ -1558,6 +2235,58 @@
                 closeModal();
             }
         });
+
+        // Scroll navigation functions
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function setupStickyNav() {
+            const quickNav = document.getElementById('quickNav');
+            const heroSection = document.querySelector('.score-hero');
+
+            window.addEventListener('scroll', () => {
+                if (!heroSection) return;
+
+                const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+                const scrollPosition = window.scrollY;
+
+                if (scrollPosition > heroBottom) {
+                    quickNav.classList.add('visible');
+                } else {
+                    quickNav.classList.remove('visible');
+                }
+            });
+        }
+
+        // Make example cards expandable (for future use if needed)
+        function toggleExample(exampleId) {
+            const card = document.getElementById(exampleId);
+            if (card) {
+                card.classList.toggle('expanded');
+                const details = card.querySelector('.example-details');
+                if (details) {
+                    details.classList.toggle('expanded');
+                }
+            }
+        }
     </script>
 </body>
 </html>
