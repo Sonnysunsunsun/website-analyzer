@@ -823,9 +823,8 @@
             </a>
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="/login" class="btn btn-outline">Login</a>
-                <a href="/signup" class="btn btn-primary">Start Free</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="/dashboard" class="btn btn-primary">Analyze Now</a>
             </div>
         </div>
     </nav>
@@ -833,8 +832,8 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1>Analyze Any Website in Seconds</h1>
-                <p>Get instant insights on SEO, performance, security, and mobile optimization with SiLift's AI-powered analysis engine</p>
+                <h1>Analyze Any Website in Seconds - 100% Free</h1>
+                <p>Get instant insights on SEO, performance, security, and mobile optimization with SiLift's AI-powered analysis engine. No credit card required. Unlimited analyses.</p>
 
                 <div class="trial-form">
                     <div class="trial-input-group">
@@ -959,56 +958,35 @@
         </div>
     </section>
 
-    <section class="pricing" id="pricing">
+    <section class="pricing" id="about">
         <div class="container">
             <div class="section-header">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. No hidden fees.</p>
+                <h2>100% Free. Forever.</h2>
+                <p>We believe powerful website analysis tools should be accessible to everyone.</p>
             </div>
 
             <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Free</h3>
-                    <div class="price">$0<span>/month</span></div>
-                    <p style="color: var(--gray);">Perfect for trying out</p>
-                    <ul class="pricing-features">
-                        <li>✓ 3 analyses per month</li>
-                        <li>✓ Basic reports</li>
-                        <li>✓ Email support</li>
-                        <li>✗ API access</li>
-                        <li>✗ Export to PDF</li>
+                <div class="pricing-card" style="max-width: 400px; margin: 0 auto;">
+                    <h3 style="color: var(--primary); font-size: 2rem;">✓ Completely Free</h3>
+                    <div class="price" style="font-size: 3rem; color: var(--success);">$0<span style="font-size: 1.5rem;">/forever</span></div>
+                    <p style="color: var(--dark); font-weight: 500; margin: 1rem 0;">Everything included. No upgrades. No limits.</p>
+                    <ul class="pricing-features" style="text-align: left;">
+                        <li>✓ Unlimited website analyses</li>
+                        <li>✓ Full SEO & performance reports</li>
+                        <li>✓ AI-powered insights</li>
+                        <li>✓ Mobile & security analysis</li>
+                        <li>✓ No credit card required</li>
+                        <li>✓ No hidden fees. Ever.</li>
                     </ul>
-                    <a href="/signup" class="btn btn-outline" style="width: 100%;">Start Free</a>
+                    <a href="/dashboard" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Start Analyzing Now</a>
                 </div>
+            </div>
 
-                <div class="pricing-card featured">
-                    <span class="pricing-badge">MOST POPULAR</span>
-                    <h3>Professional</h3>
-                    <div class="price">$29<span>/month</span></div>
-                    <p style="opacity: 0.9;">For professionals</p>
-                    <ul class="pricing-features">
-                        <li>✓ 50 analyses per month</li>
-                        <li>✓ Advanced reports</li>
-                        <li>✓ API access</li>
-                        <li>✓ Priority support</li>
-                        <li>✓ Export to PDF</li>
-                    </ul>
-                    <a href="/signup?plan=professional" class="btn" style="width: 100%; background: white; color: var(--primary);">Get Started</a>
-                </div>
-
-                <div class="pricing-card">
-                    <h3>Enterprise</h3>
-                    <div class="price">$99<span>/month</span></div>
-                    <p style="color: var(--gray);">For teams & agencies</p>
-                    <ul class="pricing-features">
-                        <li>✓ Unlimited analyses</li>
-                        <li>✓ White-label reports</li>
-                        <li>✓ Advanced API</li>
-                        <li>✓ Dedicated support</li>
-                        <li>✓ Custom integrations</li>
-                    </ul>
-                    <a href="/contact" class="btn btn-primary" style="width: 100%;">Contact Sales</a>
-                </div>
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--light-gray); border-radius: 12px;">
+                <h3 style="margin-bottom: 1rem; color: var(--dark);">How Do We Stay Free?</h3>
+                <p style="max-width: 700px; margin: 0 auto; color: var(--gray); line-height: 1.7;">
+                    SiLift is supported by non-intrusive advertising and partnerships. Our mission is to make professional-grade website analysis accessible to everyone—from solo developers to growing businesses. We're building value through community and traffic, not paywalls.
+                </p>
             </div>
         </div>
     </section>
@@ -1018,9 +996,9 @@
             <div class="footer-section">
                 <h4>Product</h4>
                 <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="/docs">API Documentation</a>
-                <a href="/changelog">Changelog</a>
+                <a href="#about">About</a>
+                <a href="/dashboard">Analyze Website</a>
+                <a href="/docs">Documentation</a>
             </div>
 
             <div class="footer-section">
@@ -1084,15 +1062,7 @@
 
                 if (!response.ok) {
                     stopProgressSimulation();
-                    if (response.status === 402) {
-                        showError('Free trial limit reached. Sign up to continue!');
-                        setTimeout(() => {
-                            window.location.href = '/signup';
-                        }, 2000);
-                    } else {
-                        throw new Error(data.message || data.error || 'Analysis failed');
-                    }
-                    return;
+                    throw new Error(data.message || data.error || 'Analysis failed');
                 }
 
                 // Complete progress to 100%
