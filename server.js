@@ -648,10 +648,10 @@ class WebsiteAnalyzer {
             recommendations.push({
                 category: 'SEO',
                 priority: 'High',
-                issue: 'Page title is not optimal length',
-                recommendation: `Adjust your page title to be between 30-60 characters. Current: ${data.seo.title.length} characters.`,
-                impact: 'High',
-                effort: 'Low'
+                issue: 'Your page title could be better for Google',
+                recommendation: `Your page title is ${data.seo.title.length} characters long. Google likes titles between 30-60 characters - this helps your site show up better in search results. Think of it like the headline on a flyer - too short or too long doesn't grab attention.`,
+                impact: 'High - Better Google rankings',
+                effort: 'Easy - 5 minutes'
             });
         }
 
@@ -659,10 +659,10 @@ class WebsiteAnalyzer {
             recommendations.push({
                 category: 'SEO',
                 priority: 'High',
-                issue: 'Meta description is not optimal length',
-                recommendation: `Write a meta description between 120-160 characters. Current: ${data.seo.metaDescription.length} characters.`,
-                impact: 'High',
-                effort: 'Low'
+                issue: 'Your site description needs work',
+                recommendation: `Your site description is ${data.seo.metaDescription.length} characters. The sweet spot is 120-160 characters - this is what people see under your link on Google. It's like a mini-ad for your store, so make it count!`,
+                impact: 'High - More clicks from Google',
+                effort: 'Easy - 10 minutes'
             });
         }
 
@@ -670,10 +670,10 @@ class WebsiteAnalyzer {
             recommendations.push({
                 category: 'SEO',
                 priority: 'Medium',
-                issue: `${data.seo.images.withoutAlt} images missing alt text`,
-                recommendation: 'Add descriptive alt text to all images for better SEO and accessibility.',
-                impact: 'Medium',
-                effort: 'Low'
+                issue: `${data.seo.images.withoutAlt} images are missing descriptions`,
+                recommendation: `You have ${data.seo.images.withoutAlt} images without descriptions (alt text). Adding short descriptions helps Google understand your images and makes your site accessible to visually impaired visitors. Plus, your images can show up in Google Image search!`,
+                impact: 'Medium - Better image search rankings',
+                effort: 'Easy - 2 minutes per image'
             });
         }
 
@@ -681,10 +681,10 @@ class WebsiteAnalyzer {
             recommendations.push({
                 category: 'Performance',
                 priority: 'High',
-                issue: 'Slow page load time',
-                recommendation: `Your page takes ${(data.performance.loadTime / 1000).toFixed(1)} seconds to load. Optimize images, minimize CSS/JS, and enable caching.`,
-                impact: 'High',
-                effort: 'Medium'
+                issue: 'Your website loads too slowly',
+                recommendation: `Your site takes ${(data.performance.loadTime / 1000).toFixed(1)} seconds to load. People expect sites to load in 2-3 seconds - if it's slower, they leave! Quick fixes: compress your images (make file sizes smaller), use a good web host, and remove unnecessary plugins or scripts.`,
+                impact: 'High - Fewer people leaving',
+                effort: 'Medium - 1-2 hours or hire help'
             });
         }
 
@@ -692,10 +692,10 @@ class WebsiteAnalyzer {
             recommendations.push({
                 category: 'Mobile',
                 priority: 'Critical',
-                issue: 'Missing viewport meta tag',
-                recommendation: 'Add viewport meta tag to ensure proper mobile rendering.',
-                impact: 'Critical',
-                effort: 'Low'
+                issue: 'Your site might look broken on phones',
+                recommendation: `Your site is missing a mobile setting (viewport tag). This makes your site look zoomed out or weird on phones. Since most people browse on phones, this is really important to fix! Your web developer can add this in 30 seconds.`,
+                impact: 'Critical - Site looks bad on mobile',
+                effort: 'Easy - Ask your developer'
             });
         }
 
@@ -703,10 +703,10 @@ class WebsiteAnalyzer {
             recommendations.push({
                 category: 'Security',
                 priority: 'Critical',
-                issue: 'Not using HTTPS',
-                recommendation: 'Enable SSL/HTTPS to secure your website and improve SEO rankings.',
-                impact: 'Critical',
-                effort: 'Medium'
+                issue: 'Your site is not secure (no padlock)',
+                recommendation: `Your site doesn't have HTTPS (the padlock in the browser). This means customer data isn't encrypted, browsers show warnings, and Google ranks you lower. Most web hosts offer free SSL certificates - contact them to enable it. This is especially important if you collect emails or payments!`,
+                impact: 'Critical - Trust & Google rankings',
+                effort: 'Easy - Contact your web host'
             });
         }
 

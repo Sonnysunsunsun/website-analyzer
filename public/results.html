@@ -1150,7 +1150,7 @@
                     <i class="fas fa-tachometer-alt"></i> Performance
                 </button>
                 <button class="tab-btn" onclick="switchTab('seo')">
-                    <i class="fas fa-search"></i> SEO Analysis
+                    <i class="fas fa-search"></i> Google Search
                 </button>
                 <button class="tab-btn" onclick="switchTab('security')">
                     <i class="fas fa-shield-alt"></i> Security
@@ -1170,17 +1170,17 @@
             </div>
 
             <div id="performance-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Performance Metrics & Optimization</h3>
+                <h3 style="margin-bottom: 24px;">Speed & Loading Time</h3>
                 <div id="performanceDetails"></div>
             </div>
 
             <div id="seo-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Search Engine Optimization Analysis</h3>
+                <h3 style="margin-bottom: 24px;">How You Show Up on Google</h3>
                 <div id="seoDetails"></div>
             </div>
 
             <div id="security-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Security Assessment</h3>
+                <h3 style="margin-bottom: 24px;">Is Your Site Safe & Trustworthy?</h3>
                 <div id="securityDetails"></div>
             </div>
 
@@ -1387,21 +1387,21 @@
                     positive: data.performance && data.performance.loadTime < 3000
                 },
                 {
-                    label: 'SEO Score',
+                    label: 'Google Ranking',
                     value: data.seo ? data.seo.score : 0,
-                    change: data.seo && data.seo.score >= 80 ? 'Excellent' : 'Needs Work',
+                    change: data.seo && data.seo.score >= 80 ? 'Looking Good!' : 'Can Improve',
                     positive: data.seo && data.seo.score >= 80
                 },
                 {
-                    label: 'Mobile Ready',
-                    value: data.mobile && data.mobile.score >= 70 ? 'Yes' : 'No',
-                    change: data.mobile && data.mobile.score >= 70 ? 'Optimized' : 'Issues Found',
+                    label: 'Works on Phones',
+                    value: data.mobile && data.mobile.score >= 70 ? 'Yes' : 'Needs Help',
+                    change: data.mobile && data.mobile.score >= 70 ? 'Looks Great' : 'Fix Needed',
                     positive: data.mobile && data.mobile.score >= 70
                 },
                 {
                     label: 'Security',
-                    value: data.security && data.security.isHTTPS ? 'Secure' : 'At Risk',
-                    change: data.security && data.security.isHTTPS ? 'HTTPS Active' : 'No HTTPS',
+                    value: data.security && data.security.isHTTPS ? 'Secure' : 'Not Secure',
+                    change: data.security && data.security.isHTTPS ? 'Has Padlock' : 'No Padlock',
                     positive: data.security && data.security.isHTTPS
                 },
                 {
