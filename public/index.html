@@ -836,10 +836,11 @@
                 <p>Get instant insights on SEO, performance, security, and mobile optimization with SiLift's AI-powered analysis engine. No credit card required. Unlimited analyses.</p>
 
                 <div class="trial-form">
-                    <div class="trial-input-group">
-                        <input type="text" class="trial-input" placeholder="Enter any website URL" id="trialUrl">
-                        <button class="trial-btn" onclick="tryAnalysis()">
-                            Analyze
+                    <div class="trial-input-group" style="flex-direction: column; gap: 12px;">
+                        <input type="url" class="trial-input" placeholder="Enter website URL (e.g., example.com)" id="trialUrl" required>
+                        <input type="email" class="trial-input" placeholder="Your email address" id="userEmail" required>
+                        <button class="trial-btn" onclick="tryAnalysis()" style="width: 100%; border-radius: 8px;">
+                            Analyze Website
                         </button>
                     </div>
                     <div class="error-message" id="errorMessage"></div>
@@ -1036,10 +1037,24 @@
 
         async function tryAnalysis() {
             const urlInput = document.getElementById('trialUrl');
+            const emailInput = document.getElementById('userEmail');
             const url = urlInput.value.trim();
+            const email = emailInput.value.trim();
 
             if (!url) {
                 showError('Please enter a valid website URL');
+                return;
+            }
+
+            if (!email) {
+                showError('Please enter your email address');
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Please enter a valid email address');
                 return;
             }
 
@@ -1055,7 +1070,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ url })
+                    body: JSON.stringify({ url, email })
                 });
 
                 const data = await response.json();
