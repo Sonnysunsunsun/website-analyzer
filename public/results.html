@@ -435,8 +435,10 @@
         .recommendations-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: start;
             margin-bottom: 32px;
+            gap: 24px;
+            flex-wrap: wrap;
         }
 
         .recommendations h2 {
@@ -1049,11 +1051,7 @@
 <body>
     <nav class="nav">
         <div class="nav-container">
-            <a href="/" class="logo">SiteAnalyzer Pro</a>
-            <div style="display: flex; gap: 16px;">
-                <a href="/dashboard" class="btn btn-outline">Dashboard</a>
-                <a href="/signup" class="btn btn-primary" id="signupBtn">Get Started</a>
-            </div>
+            <a href="/" class="logo">SiLift</a>
         </div>
     </nav>
 
@@ -1077,15 +1075,7 @@
             </div>
         </div>
 
-        <div id="limitedBanner" class="limited-banner" style="display: none;">
-            <div>
-                <h3>🎉 Limited Trial Results</h3>
-                <p>Unlock full recommendations, competitor analysis, and PDF reports with a Pro account!</p>
-            </div>
-            <a href="/signup" class="btn" style="background: white; color: var(--dark);">
-                Upgrade Now - 50% OFF
-            </a>
-        </div>
+
 
         <div class="score-hero">
             <div class="url-display" id="urlDisplay">
@@ -1118,14 +1108,6 @@
             <div id="issuesSummary" class="issues-summary"></div>
 
             <div class="action-buttons">
-                <button class="btn btn-primary" onclick="downloadPDF()">
-                    <i class="fas fa-file-pdf"></i>
-                    Download Full Report PDF
-                </button>
-                <button class="btn btn-outline" onclick="exportReport('json')">
-                    <i class="fas fa-code"></i>
-                    Export JSON
-                </button>
                 <button class="btn btn-outline" onclick="shareReport()">
                     <i class="fas fa-share-alt"></i>
                     Share Report
@@ -1137,58 +1119,6 @@
             </div>
         </div>
 
-        <!-- Detailed Analysis Tabs -->
-        <div class="analysis-tabs">
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('overview')">
-                    <i class="fas fa-chart-pie"></i> Overview
-                </button>
-                <button class="tab-btn" onclick="switchTab('technical')">
-                    <i class="fas fa-code"></i> Technical Details
-                </button>
-                <button class="tab-btn" onclick="switchTab('performance')">
-                    <i class="fas fa-tachometer-alt"></i> Performance
-                </button>
-                <button class="tab-btn" onclick="switchTab('seo')">
-                    <i class="fas fa-search"></i> Google Search
-                </button>
-                <button class="tab-btn" onclick="switchTab('security')">
-                    <i class="fas fa-shield-alt"></i> Security
-                </button>
-                <button class="tab-btn" onclick="switchTab('competitors')">
-                    <i class="fas fa-trophy"></i> Competitors
-                </button>
-            </div>
-
-            <div id="overview-tab" class="tab-content active">
-                <div class="categories-grid" id="categoriesGrid"></div>
-            </div>
-
-            <div id="technical-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Technical Implementation Details</h3>
-                <div id="technicalDetails"></div>
-            </div>
-
-            <div id="performance-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Speed & Loading Time</h3>
-                <div id="performanceDetails"></div>
-            </div>
-
-            <div id="seo-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">How You Show Up on Google</h3>
-                <div id="seoDetails"></div>
-            </div>
-
-            <div id="security-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Is Your Site Safe & Trustworthy?</h3>
-                <div id="securityDetails"></div>
-            </div>
-
-            <div id="competitors-tab" class="tab-content">
-                <h3 style="margin-bottom: 24px;">Competitor Comparison</h3>
-                <div class="competitor-grid" id="competitorGrid"></div>
-            </div>
-        </div>
 
         <!-- Real Examples Section - NEW -->
         <div class="recommendations" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
@@ -1201,7 +1131,12 @@
 
         <div class="recommendations" id="recommendationsSection">
             <div class="recommendations-header">
-                <h2>Priority Recommendations</h2>
+                <div>
+                    <h2>🎯 Priority Recommendations</h2>
+                    <p style="color: var(--gray); margin-top: 8px; font-size: 15px;">
+                        Actionable steps you can implement right now to improve your site
+                    </p>
+                </div>
                 <div class="filter-buttons">
                     <button class="filter-btn active" onclick="filterRecommendations('all')">All</button>
                     <button class="filter-btn" onclick="filterRecommendations('critical')">Critical</button>
@@ -1213,60 +1148,6 @@
         </div>
     </div>
 
-    <!-- Upgrade Modal -->
-    <div id="upgradeModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>Unlock Full Analysis</h2>
-                <p style="color: var(--gray);">Get comprehensive reports, competitor analysis, and unlimited PDF downloads</p>
-            </div>
-            <div class="modal-body">
-                <div class="pricing-cards">
-                    <div class="pricing-card" style="position: relative;">
-                        <h3>Professional</h3>
-                        <div class="price">
-                            $49
-                            <span class="price-period">/month</span>
-                        </div>
-                        <ul class="features-list">
-                            <li><i class="fas fa-check"></i> Unlimited PDF Reports</li>
-                            <li><i class="fas fa-check"></i> 100 Analyses/month</li>
-                            <li><i class="fas fa-check"></i> Competitor Tracking</li>
-                            <li><i class="fas fa-check"></i> API Access</li>
-                            <li><i class="fas fa-check"></i> Priority Support</li>
-                        </ul>
-                        <button class="btn btn-primary" style="width: 100%;" onclick="selectPlan('professional')">
-                            Choose Professional
-                        </button>
-                    </div>
-                    <div class="pricing-card recommended" style="position: relative;">
-                        <h3>Enterprise</h3>
-                        <div class="price">
-                            $199
-                            <span class="price-period">/month</span>
-                        </div>
-                        <ul class="features-list">
-                            <li><i class="fas fa-check"></i> Everything in Pro</li>
-                            <li><i class="fas fa-check"></i> Unlimited Analyses</li>
-                            <li><i class="fas fa-check"></i> White-label Reports</li>
-                            <li><i class="fas fa-check"></i> Team Collaboration</li>
-                            <li><i class="fas fa-check"></i> Custom Integrations</li>
-                            <li><i class="fas fa-check"></i> Dedicated Support</li>
-                        </ul>
-                        <button class="btn btn-primary" style="width: 100%; background: linear-gradient(135deg, #FFD700, #FFA500);" onclick="selectPlan('enterprise')">
-                            Choose Enterprise
-                        </button>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 24px; color: var(--gray);">
-                    <i class="fas fa-lock"></i> Secure payment via Stripe • Cancel anytime
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal()">Maybe Later</button>
-            </div>
-        </div>
-    </div>
 
     <script>
         let analysisData = null;
@@ -1282,9 +1163,6 @@
             if (token && userData) {
                 const user = JSON.parse(userData);
                 userTier = user.subscriptionTier || 'free';
-
-                document.getElementById('signupBtn').textContent = 'Dashboard';
-                document.getElementById('signupBtn').href = '/dashboard';
             }
 
             // Try to get data from sessionStorage first (from trial)
@@ -1318,11 +1196,6 @@
             const date = new Date(data.timestamp);
             document.getElementById('timestamp').textContent = `Analyzed ${date.toLocaleString()}`;
 
-            // Show limited banner if trial or free user
-            if (data.limitedTrial || userTier === 'free') {
-                document.getElementById('limitedBanner').style.display = 'flex';
-            }
-
             // DEBUG: Log all data to console
             console.log('=== FULL ANALYSIS DATA ===', data);
             console.log('AI Analysis exists:', !!data.aiAnalysis);
@@ -1354,16 +1227,6 @@
 
             // Display quick insights
             displayQuickInsights(data);
-
-            // Display categories
-            displayCategories(data);
-
-            // Display detailed tabs content
-            displayTechnicalDetails(data);
-            displayPerformanceDetails(data);
-            displaySEODetails(data);
-            displaySecurityDetails(data);
-            displayCompetitorAnalysis(data);
 
             // Display recommendations
             displayRecommendations(data.recommendations);
@@ -1511,249 +1374,7 @@
             return '';
         }
 
-        function displayCategories(data) {
-            const categories = [
-                {
-                    title: 'SEO Optimization',
-                    icon: '🔍',
-                    score: data.seo ? Math.round(data.seo.score) : 0,
-                    details: [
-                        { label: 'Title Tag', value: data.seo && data.seo.title ? `${data.seo.title.length} chars` : 'Missing' },
-                        { label: 'Meta Description', value: data.seo && data.seo.metaDescription ? `${data.seo.metaDescription.length} chars` : 'Missing' },
-                        { label: 'H1 Tags', value: data.seo && data.seo.headings ? data.seo.headings.h1Count : 0 },
-                        { label: 'Image Alt Tags', value: data.seo && data.seo.images ? `${Math.round(data.seo.images.altCoverage)}%` : 'N/A' },
-                        { label: 'Internal Links', value: data.seo && data.seo.links ? data.seo.links.internal : 0 }
-                    ]
-                },
-                {
-                    title: 'Performance',
-                    icon: '⚡',
-                    score: data.performance ? Math.round(data.performance.score) : 0,
-                    details: [
-                        { label: 'Load Time', value: data.performance && data.performance.loadTime ? `${Math.round(data.performance.loadTime / 1000)}s` : 'N/A' },
-                        { label: 'DOM Content', value: data.performance && data.performance.domContentLoaded ? `${Math.round(data.performance.domContentLoaded / 1000)}s` : 'N/A' },
-                        { label: 'Page Size', value: '2.4 MB' },
-                        { label: 'Requests', value: '47' },
-                        { label: 'Cache Status', value: 'Not Optimized' }
-                    ]
-                },
-                {
-                    title: 'Mobile Experience',
-                    icon: '📱',
-                    score: data.mobile ? Math.round(data.mobile.score) : 0,
-                    details: [
-                        { label: 'Viewport Tag', value: data.mobile && data.mobile.hasViewport ? '✅ Present' : '❌ Missing' },
-                        { label: 'Responsive', value: data.mobile && data.mobile.responsive ? '✅ Yes' : '❌ No' },
-                        { label: 'Touch Targets', value: data.mobile && data.mobile.touchTargets ? `${Math.round(data.mobile.touchTargets.adequatePercentage || 0)}% OK` : 'N/A' },
-                        { label: 'Text Size', value: 'Readable' },
-                        { label: 'Mobile Score', value: `${data.mobile ? data.mobile.score : 0}/100` }
-                    ]
-                },
-                {
-                    title: 'Security',
-                    icon: '🔒',
-                    score: data.security ? Math.round(data.security.score) : 0,
-                    details: [
-                        { label: 'HTTPS', value: data.security && data.security.isHTTPS ? '✅ Enabled' : '❌ Disabled' },
-                        { label: 'SSL Certificate', value: data.security && data.security.isHTTPS ? 'Valid' : 'N/A' },
-                        { label: 'Mixed Content', value: 'None Detected' },
-                        { label: 'Security Headers', value: '3/7 Present' },
-                        { label: 'Overall Status', value: data.security && data.security.score >= 70 ? 'Secure' : 'At Risk' }
-                    ]
-                },
-                {
-                    title: 'Content Quality',
-                    icon: '📝',
-                    score: data.content ? Math.round(data.content.score) : 0,
-                    details: [
-                        { label: 'Word Count', value: data.content && data.content.wordCount ? data.content.wordCount : 0 },
-                        { label: 'Reading Level', value: 'Grade 8' },
-                        { label: 'CTAs Found', value: data.content && data.content.ctaButtons ? data.content.ctaButtons : 0 },
-                        { label: 'Contact Info', value: data.content && data.content.hasContactInfo && (data.content.hasContactInfo.email || data.content.hasContactInfo.phone) ? '✅ Found' : '❌ Missing' },
-                        { label: 'Unique Content', value: '92%' }
-                    ]
-                },
-                {
-                    title: 'Technical Health',
-                    icon: '⚙️',
-                    score: data.technical ? Math.round(data.technical.score) : 0,
-                    details: [
-                        { label: 'HTML Valid', value: '✅ Valid' },
-                        { label: 'Broken Links', value: data.technical && data.technical.brokenLinks ? data.technical.brokenLinks : 0 },
-                        { label: 'Forms', value: data.technical && data.technical.forms ? data.technical.forms : 0 },
-                        { label: 'Cookies', value: data.technical && data.technical.cookies ? data.technical.cookies.length : 0 },
-                        { label: 'Console Errors', value: data.technical && data.technical.consoleErrors ? data.technical.consoleErrors : 0 }
-                    ]
-                }
-            ];
 
-            const html = categories.map(cat => {
-                const scoreClass = cat.score >= 80 ? 'score-high' : cat.score >= 60 ? 'score-medium' : 'score-low';
-                const progressColor = cat.score >= 80 ? '#10b981' : cat.score >= 60 ? '#f59e0b' : '#ef4444';
-
-                return `
-                    <div class="category-card">
-                        <div class="category-header">
-                            <h3 class="category-title">
-                                <span style="font-size: 24px;">${cat.icon}</span>
-                                ${cat.title}
-                                <span class="tooltip-icon">?
-                                    <div class="tooltip-content">
-                                        ${metricTooltips[cat.title] || 'This metric helps evaluate your website performance.'}
-                                    </div>
-                                </span>
-                            </h3>
-                            <div class="category-score ${scoreClass}">${cat.score}/100</div>
-                        </div>
-                        <div class="category-progress">
-                            <div class="category-progress-fill" style="width: ${cat.score}%; background: ${progressColor};"></div>
-                        </div>
-                        <div class="category-details">
-                            ${cat.details.map(detail => {
-                                const valueStatus = getValueStatus(detail.label, detail.value);
-                                const valueClass = valueStatus ? `value-${valueStatus}` : '';
-                                return `
-                                    <div class="category-item">
-                                        <span>${detail.label}</span>
-                                        <strong class="${valueClass}">${detail.value}</strong>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('categoriesGrid').innerHTML = html;
-        }
-
-        function displayTechnicalDetails(data) {
-            const html = `
-                <div class="category-card">
-                    <h4>HTML Structure Analysis</h4>
-                    <div class="category-details">
-                        <div class="category-item">
-                            <span>HTML5 Semantic Tags</span>
-                            <strong>12 found</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>Accessibility Score</span>
-                            <strong>78/100</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>W3C Validation</span>
-                            <strong>3 warnings</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="code-example">
-                    <div class="code-label">Recommended HTML Structure</div>
-                    <pre>&lt;header role="banner"&gt;
-  &lt;nav aria-label="Main navigation"&gt;...&lt;/nav&gt;
-&lt;/header&gt;
-&lt;main role="main"&gt;
-  &lt;article&gt;...&lt;/article&gt;
-&lt;/main&gt;</pre>
-                </div>
-            `;
-            document.getElementById('technicalDetails').innerHTML = html;
-        }
-
-        function displayPerformanceDetails(data) {
-            const html = `
-                <div class="category-card">
-                    <h4>Core Web Vitals</h4>
-                    <div class="category-details">
-                        <div class="category-item">
-                            <span>Largest Contentful Paint (LCP)</span>
-                            <strong>2.3s</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>First Input Delay (FID)</span>
-                            <strong>45ms</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>Cumulative Layout Shift (CLS)</span>
-                            <strong>0.08</strong>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('performanceDetails').innerHTML = html;
-        }
-
-        function displaySEODetails(data) {
-            const html = `
-                <div class="category-card">
-                    <h4>On-Page SEO Analysis</h4>
-                    <div class="category-details">
-                        <div class="category-item">
-                            <span>Keyword Density</span>
-                            <strong>2.3%</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>Schema Markup</span>
-                            <strong>Not Found</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>Open Graph Tags</span>
-                            <strong>4 present</strong>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('seoDetails').innerHTML = html;
-        }
-
-        function displaySecurityDetails(data) {
-            const html = `
-                <div class="category-card">
-                    <h4>Security Headers Analysis</h4>
-                    <div class="category-details">
-                        <div class="category-item">
-                            <span>Content-Security-Policy</span>
-                            <strong>❌ Missing</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>X-Frame-Options</span>
-                            <strong>✅ Present</strong>
-                        </div>
-                        <div class="category-item">
-                            <span>X-Content-Type-Options</span>
-                            <strong>✅ Present</strong>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('securityDetails').innerHTML = html;
-        }
-
-        function displayCompetitorAnalysis(data) {
-            const html = `
-                <div class="competitor-card">
-                    <h4>Your Site</h4>
-                    <div style="font-size: 48px; font-weight: 700; color: var(--primary); margin: 16px 0;">
-                        ${data.seo ? Math.round(data.seo.score) : 0}
-                    </div>
-                    <p style="color: var(--gray);">Current Score</p>
-                </div>
-                <div class="competitor-card">
-                    <h4>Industry Average</h4>
-                    <div style="font-size: 48px; font-weight: 700; color: var(--warning); margin: 16px 0;">
-                        72
-                    </div>
-                    <p style="color: var(--gray);">Benchmark Score</p>
-                </div>
-                <div class="competitor-card">
-                    <h4>Top Competitor</h4>
-                    <div style="font-size: 48px; font-weight: 700; color: var(--success); margin: 16px 0;">
-                        89
-                    </div>
-                    <p style="color: var(--gray);">Leader Score</p>
-                </div>
-            `;
-            document.getElementById('competitorGrid').innerHTML = html;
-        }
 
         function displayIssuesSummary(data) {
             const examples = [];
@@ -2161,15 +1782,6 @@
             document.getElementById('recommendationsList').innerHTML = html;
         }
 
-        function switchTab(tabName) {
-            // Remove active class from all tabs and buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            // Add active class to selected tab and button
-            event.target.classList.add('active');
-            document.getElementById(`${tabName}-tab`).classList.add('active');
-        }
 
         function filterRecommendations(filter) {
             currentFilter = filter;
@@ -2182,17 +1794,6 @@
             displayRecommendations(analysisData.recommendations);
         }
 
-        function downloadPDF() {
-            // Check if user has access
-            if (userTier === 'free' || userTier === 'basic') {
-                // Show upgrade modal
-                document.getElementById('upgradeModal').classList.add('show');
-                return;
-            }
-
-            // For pro/enterprise users, generate PDF
-            alert('Generating comprehensive PDF report... This feature is coming soon!');
-        }
 
         function exportReport(format) {
             if (!analysisData) return;
@@ -2235,21 +1836,6 @@
             }
         }
 
-        function closeModal() {
-            document.getElementById('upgradeModal').classList.remove('show');
-        }
-
-        function selectPlan(plan) {
-            // Redirect to signup/payment page with selected plan
-            window.location.href = `/signup?plan=${plan}&upgrade=true`;
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('upgradeModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('upgradeModal')) {
-                closeModal();
-            }
-        });
 
         // Scroll navigation functions
         function scrollToSection(sectionId) {
